@@ -4,12 +4,12 @@ public class Parede {
 
     private double x, y, altura, largura, perda;
 
-    public Parede(double x, double y, double l, double a, double p) {
+    public Parede(double x, double y, double largura, double altura, double perda) {
         this.x = x;
         this.y = y;
-        this.altura = a;
-        this.largura = l;
-        this.perda = p;
+        this.altura = altura;
+        this.largura = largura;
+        this.perda = perda;
     }
 
     public double getX() {
