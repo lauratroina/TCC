@@ -24,7 +24,7 @@ public class Celula {
         public double getPotencia(){
             return this.potencia;
         }
-        public void setPot(int potencia){
+        public void setPotencia(double potencia){
             this.potencia = potencia;
         }
         public double getTaxa(){
