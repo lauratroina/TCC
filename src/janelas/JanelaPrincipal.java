@@ -154,6 +154,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         ArrayList<Reta> retas = new ArrayList<Reta>();
         ArrayList<Celula> celulas = new ArrayList<Celula>();
+        ArrayList<PontoAcesso> pas = new ArrayList<PontoAcesso>();
+
+        pas.add(new PontoAcesso(10, 7.5));
+        pas.add(new PontoAcesso(40, 7.5));
 
         double mx = 0; // maximo x
         double my = 0; // maximo y
@@ -179,19 +183,20 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 celulas.add(new Celula(i, j));
             }
         }
-
-        double db1;
-        Celula r1 = new Celula(25, 7.5);
+        double db = 0;
         int cmaior24 = 0, cmenor0 = 0;
         for (Celula c : celulas) {
+            for (PontoAcesso pa : pas) {
+                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + d / 2), 2) + Math.pow(pa.getY() - (c.getY() + d / 2), 2)));
 
-            db1 = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(r1.getX() - (c.getX() + d / 2), 2) + Math.pow(r1.getY() - (c.getY() + d / 2), 2)));
-
-            for (Reta r : retas) {
-                db1 -= interseccao(r1.getX(), r1.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
+                for (Reta r : retas) {
+                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
+                }
+                if (db > c.getPotencia()) {
+                    c.setPotencia(db);
+                }
             }
-
-            c.setPotencia(db1);
+            
             if (c.getPotencia() < -89) {
                 cmenor0++;
             }
@@ -231,9 +236,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
         }
 
-        g.setColor(Color.WHITE);
-        g.fillArc((int) ((r1.getX() * f) - (10 / 2)), (int) ((r1.getY() * f) - (10 / 2)), 10, 10, 0, 360);
-
+        for (PontoAcesso pa : pas) {
+            g.setColor(Color.WHITE);
+            g.fillArc((int) ((pa.getX() * f) - (10 / 2)), (int) ((pa.getY() * f) - (10 / 2)), 10, 10, 0, 360);
+        }
         /*for (Reta r : retas) {
             g.setColor(Color.RED);
             g.drawLine((int) (r.getX1() * f), (int) (r.getY1() * f), (int) (r.getX2() * f), (int) (r.getY2() * f));
