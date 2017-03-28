@@ -28,7 +28,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
         setResizable(false);
 
         jButton1.setText("Abrir XML");
@@ -114,161 +113,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*   private void DesenhaHeatMap(ArrayList<Celula> celulas) {
-
-        double d = 0.1; //ler dos parametros
-        
-        ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
-        Graphics g = jPanel1.getGraphics();
-        frequencias.add(new Frequencia(-64, 0, 54, new Color(128,0,0)));
-        frequencias.add(new Frequencia(-66, -64, 48, new Color(255,0,0)));
-        frequencias.add(new Frequencia(-70, -66, 36, new Color(255,128,0)));
-        frequencias.add(new Frequencia(-72, -70, 24, new Color(255,255,0)));
-        frequencias.add(new Frequencia(-76, -72, 18, new Color(128,255,128)));
-        frequencias.add(new Frequencia(-80, -76, 12, new Color(0,255,255)));
-        frequencias.add(new Frequencia(-84, -80, 9, new Color(0,128,255)));
-        frequencias.add(new Frequencia(-89, -84, 6, new Color(0,0,255)));
-        frequencias.add(new Frequencia(-1000, -89, 0, new Color(0,0,128)));
-
-        for (Celula celula : celulas) {
-            Color cor = null;
-            for (Frequencia f : frequencias) {
-                if (f.getLimiteInfeior() < celula.getPotencia()
-                        && celula.getPotencia() <= f.getLimiteSuperior()) {
-                    cor = f.getCor();
-                }
-            }
-
-            double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
-
-            g.setColor(cor);
-            
-            g.fillRect((int)(celula.getX() * d * f), (int) (celula.getY() * d * f), (int)(d * f + 1), (int)(d * f + 1));
-
-        }
-    }
-     */
-    private void DesenhaPlanta(ArrayList<Parede> paredes) {
-
-        Graphics g = jPanel1.getGraphics();
-
-        double d = 1; //ler dos parametros
-        double mx = 0; // maximo x
-        double my = 0; // maximo y
-
-        for (Parede p : paredes) {
-            if ((p.getX() + p.getLargura()) > mx) {
-                mx = p.getX() + p.getLargura();
-            }
-            if ((p.getY() + p.getAltura()) > my) {
-                my = p.getY() + p.getAltura();
-            }
-        }
-
-        double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
-
-        for (Parede p : paredes) {
-            g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
-        }
-    }
-
-    private static int interseccao(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
-            double y4) {
-        double d = (x4 - x3) * (y1 - y2) - (x1 - x2) * (y4 - y3);
-        if (d == 0) {
-            return 0;
-        }
-        double ta = ((y3 - y4) * (x1 - x3) + (x4 - x3) * (y1 - y3)) / d;
-        double tb = ((y1 - y2) * (x1 - x3) + (x2 - x1) * (y1 - y3)) / d;
-        return (((ta >= 0) && (ta <= 1)) && ((tb >= 0) && (tb <= 1))) ? 1 : 0;
-    }
-
-    private void CalculaForcaBruta(ArrayList<Parede> paredes) {
-
-        double d = 1; //ler dos parametros
-
-        ArrayList<Reta> retas = new ArrayList<Reta>();
-        ArrayList<Celula> celulas = new ArrayList<Celula>();
-
-        double mx = 0; // maximo x
-        double my = 0; // maximo y
-
-        for (Parede p : paredes) {
-            if (p.getX() + p.getLargura() > mx) {
-                mx = p.getX() + p.getLargura();
-            }
-            if (p.getY() + p.getAltura() > my) {
-                my = p.getY() + p.getAltura();
-            }
-            if (p.getLargura() > p.getAltura()) {
-                retas.add(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2, p.getPerda()));
-            }
-            if (p.getAltura() > p.getLargura()) {
-                retas.add(new Reta(p.getX() + p.getLargura() / 2, p.getY(), p.getY() + p.getLargura() / 2, p.getY() + p.getAltura(), p.getPerda()));
-            }
-        }
-
-        // popular celula
-        for (double i = 0; i < mx; i += d) {
-            for (double j = 0; j < my; j += d) {
-                celulas.add(new Celula(i, j));
-            }
-        }
-
-        // número de celulas
-        int tx = (int) Math.ceil(mx / d);
-        int ty = (int) Math.ceil(my / d);
-
-        double db1;
-        Celula r1 = new Celula(25, 8.7);
-        int cmaior24 = 0, cmenor0 = 0;
-        for (Celula c : celulas) {
-            db1 = 20 - 45
-                    - 10 * 2
-                    * Math.log10(Math.sqrt(
-                            Math.pow(r1.getX() - (c.getX() + d / 2), 2) + Math.pow(r1.getY() - (c.getY() + d / 2), 2)))
-                    ;
-
-            for (Reta r : retas) {
-                db1 -= interseccao(r1.getX(), r1.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
-            }
-
-            c.setPotencia(db1);
-            if (c.getPotencia() < -89) {
-                cmenor0++;
-            }
-            if (c.getPotencia() > -72) {
-                cmaior24++;
-            }
-        }
-
-        ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
-        Graphics g = jPanel1.getGraphics();
-        frequencias.add(new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
-        frequencias.add(new Frequencia(-66, -64, 48, new Color(255, 0, 0)));
-        frequencias.add(new Frequencia(-70, -66, 36, new Color(255, 128, 0)));
-        frequencias.add(new Frequencia(-72, -70, 24, new Color(255, 255, 0)));
-        frequencias.add(new Frequencia(-76, -72, 18, new Color(128, 255, 128)));
-        frequencias.add(new Frequencia(-80, -76, 12, new Color(0, 255, 255)));
-        frequencias.add(new Frequencia(-84, -80, 9, new Color(0, 128, 255)));
-        frequencias.add(new Frequencia(-89, -84, 6, new Color(0, 0, 255)));
-        frequencias.add(new Frequencia(-1000, -89, 0, new Color(0, 0, 128)));
-
-        for (Celula celula : celulas) {
-            Color cor = null;
-            for (Frequencia f : frequencias) {
-                if (f.getLimiteInfeior() < celula.getPotencia()
-                        && celula.getPotencia() <= f.getLimiteSuperior()) {
-                    cor = f.getCor();
-                }
-            }
-
-            double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my)/d;
-            g.setColor(cor);
-            g.fillRect((int) (celula.getX() * d * f), (int) (celula.getY() * d * f), (int) (d * f + 1), (int) (d * f + 1));
-        }
-
-    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JanelaAjustes ajustes = new JanelaAjustes();
+        ajustes.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -287,16 +135,114 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             paredes = new MontaParede().Monta(arquivo);
         }
 
-        CalculaForcaBruta(paredes);
-        DesenhaPlanta(paredes);
-
+        CalculaForcaBruta(paredes, 0.1);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JanelaAjustes ajustes = new JanelaAjustes();
-        ajustes.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private static int interseccao(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
+            double y4) {
+        double d = (x4 - x3) * (y1 - y2) - (x1 - x2) * (y4 - y3);
+        if (d == 0) {
+            return 0;
+        }
+        double ta = ((y3 - y4) * (x1 - x3) + (x4 - x3) * (y1 - y3)) / d;
+        double tb = ((y1 - y2) * (x1 - x3) + (x2 - x1) * (y1 - y3)) / d;
+        return (((ta >= 0) && (ta <= 1)) && ((tb >= 0) && (tb <= 1))) ? 1 : 0;
+    }
+
+    private void CalculaForcaBruta(ArrayList<Parede> paredes, double d) {
+
+        ArrayList<Reta> retas = new ArrayList<Reta>();
+        ArrayList<Celula> celulas = new ArrayList<Celula>();
+
+        double mx = 0; // maximo x
+        double my = 0; // maximo y
+
+        for (Parede p : paredes) {
+            if (p.getX() + p.getLargura() > mx) {
+                mx = p.getX() + p.getLargura();
+            }
+            if (p.getY() + p.getAltura() > my) {
+                my = p.getY() + p.getAltura();
+            }
+            if (p.getLargura() > p.getAltura()) {
+                retas.add(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2, p.getPerda()));
+            }
+            if (p.getAltura() > p.getLargura()) {
+                retas.add(new Reta(p.getX() + p.getLargura() / 2, p.getY(), p.getX() + p.getLargura() / 2, p.getY() + p.getAltura(), p.getPerda()));
+            }
+        }
+
+        // popular celula
+        for (double i = 0; i < mx; i += d) {
+            for (double j = 0; j < my; j += d) {
+                celulas.add(new Celula(i, j));
+            }
+        }
+
+        double db1;
+        Celula r1 = new Celula(25, 7.5);
+        int cmaior24 = 0, cmenor0 = 0;
+        for (Celula c : celulas) {
+
+            db1 = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(r1.getX() - (c.getX() + d / 2), 2) + Math.pow(r1.getY() - (c.getY() + d / 2), 2)));
+
+            for (Reta r : retas) {
+                db1 -= interseccao(r1.getX(), r1.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
+            }
+
+            c.setPotencia(db1);
+            if (c.getPotencia() < -89) {
+                cmenor0++;
+            }
+            if (c.getPotencia() > -72) {
+                cmaior24++;
+            }
+        }
+
+        ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
+        frequencias.add(new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
+        frequencias.add(new Frequencia(-66, -64, 48, new Color(255, 0, 0)));
+        frequencias.add(new Frequencia(-70, -66, 36, new Color(255, 128, 0)));
+        frequencias.add(new Frequencia(-72, -70, 24, new Color(255, 255, 0)));
+        frequencias.add(new Frequencia(-76, -72, 18, new Color(128, 255, 128)));
+        frequencias.add(new Frequencia(-80, -76, 12, new Color(0, 255, 255)));
+        frequencias.add(new Frequencia(-84, -80, 9, new Color(0, 128, 255)));
+        frequencias.add(new Frequencia(-89, -84, 6, new Color(0, 0, 255)));
+        frequencias.add(new Frequencia(-1000, -89, 0, new Color(0, 0, 128)));
+
+        double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
+        Graphics g = jPanel1.getGraphics();
+
+        for (Celula celula : celulas) {
+            Color cor = null;
+            for (Frequencia freq : frequencias) {
+                if (freq.getLimiteInfeior() < celula.getPotencia()
+                        && celula.getPotencia() <= freq.getLimiteSuperior()) {
+                    cor = freq.getCor();
+                }
+            }
+
+            g.setColor(cor);
+            g.fillRect((int) (celula.getX() * f), (int) (celula.getY() * f), (int) (d * f + 1), (int) (d * f + 1));
+        }
+        for (Parede p : paredes) {
+            g.setColor(Color.BLACK);
+            g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
+        }
+
+        g.setColor(Color.WHITE);
+        g.fillArc((int) ((r1.getX() * f) - (10 / 2)), (int) ((r1.getY() * f) - (10 / 2)), 10, 10, 0, 360);
+
+        /*for (Reta r : retas) {
+            g.setColor(Color.RED);
+            g.drawLine((int) (r.getX1() * f), (int) (r.getY1() * f), (int) (r.getX2() * f), (int) (r.getY2() * f));
+        }*/
+ /*for (Celula c : celulas) {
+            g.setColor(Color.YELLOW);
+            g.drawRect((int) (c.getX() * f), (int) (c.getY() * f), (int) (d * f), (int) (d * f));
+        }*/
+    }
 
     /**
      * @param args the command line arguments
