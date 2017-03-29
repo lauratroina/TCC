@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
+import java.awt.Font;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -135,7 +136,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             paredes = new MontaParede().Monta(arquivo);
         }
 
-        CalculaForcaBruta(paredes, 0.1);
+        ArrayList<PontoAcesso> pas = new ArrayList<PontoAcesso>();
+        pas.add(new PontoAcesso(15, 3));
+
+      
+
+        CalculaForcaBruta(pas, paredes, 0.1);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -150,14 +156,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         return (((ta >= 0) && (ta <= 1)) && ((tb >= 0) && (tb <= 1))) ? 1 : 0;
     }
 
-    private void CalculaForcaBruta(ArrayList<Parede> paredes, double d) {
+    private void CalculaForcaBruta(ArrayList<PontoAcesso> pas, ArrayList<Parede> paredes, double d) {
 
         ArrayList<Reta> retas = new ArrayList<Reta>();
         ArrayList<Celula> celulas = new ArrayList<Celula>();
-        ArrayList<PontoAcesso> pas = new ArrayList<PontoAcesso>();
-
-        pas.add(new PontoAcesso(10, 7.5));
-        pas.add(new PontoAcesso(40, 7.5));
 
         double mx = 0; // maximo x
         double my = 0; // maximo y
@@ -196,7 +198,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     c.setPotencia(db);
                 }
             }
-            
+
             if (c.getPotencia() < -89) {
                 cmenor0++;
             }
@@ -204,6 +206,31 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 cmaior24++;
             }
         }
+
+        double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
+        Graphics g = jPanel1.getGraphics();
+
+        DesenhaHeatMap(pas, celulas, d, f, g);
+        DesenhaParede(paredes, d, f, g);
+
+        /*for (Reta r : retas) {
+            g.setColor(Color.RED);
+            g.drawLine((int) (r.getX1() * f), (int) (r.getY1() * f), (int) (r.getX2() * f), (int) (r.getY2() * f));
+        }
+        for (Celula c : celulas) {
+            g.setColor(Color.YELLOW);
+            g.drawRect((int) (c.getX() * f), (int) (c.getY() * f), (int) (d * f), (int) (d * f));
+        }*/
+    }
+
+    private void DesenhaParede(ArrayList<Parede> paredes, double d, double f, Graphics g) {
+        for (Parede p : paredes) {
+            g.setColor(Color.BLACK);
+            g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
+        }
+    }
+
+    private void DesenhaHeatMap(ArrayList<PontoAcesso> pas, ArrayList<Celula> celulas, double d, double f, Graphics g) {
 
         ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
         frequencias.add(new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
@@ -215,9 +242,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         frequencias.add(new Frequencia(-84, -80, 9, new Color(0, 128, 255)));
         frequencias.add(new Frequencia(-89, -84, 6, new Color(0, 0, 255)));
         frequencias.add(new Frequencia(-1000, -89, 0, new Color(0, 0, 128)));
-
-        double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
-        Graphics g = jPanel1.getGraphics();
 
         for (Celula celula : celulas) {
             Color cor = null;
@@ -231,23 +255,34 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             g.setColor(cor);
             g.fillRect((int) (celula.getX() * f), (int) (celula.getY() * f), (int) (d * f + 1), (int) (d * f + 1));
         }
-        for (Parede p : paredes) {
-            g.setColor(Color.BLACK);
-            g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
-        }
 
+        //Desenha os AP's
         for (PontoAcesso pa : pas) {
             g.setColor(Color.WHITE);
             g.fillArc((int) ((pa.getX() * f) - (10 / 2)), (int) ((pa.getY() * f) - (10 / 2)), 10, 10, 0, 360);
         }
-        /*for (Reta r : retas) {
-            g.setColor(Color.RED);
-            g.drawLine((int) (r.getX1() * f), (int) (r.getY1() * f), (int) (r.getX2() * f), (int) (r.getY2() * f));
-        }*/
- /*for (Celula c : celulas) {
-            g.setColor(Color.YELLOW);
-            g.drawRect((int) (c.getX() * f), (int) (c.getY() * f), (int) (d * f), (int) (d * f));
-        }*/
+
+        //Legenda
+        g.setFont(new Font("Serif", Font.BOLD, 16));
+        int i = 0;
+        for (Frequencia freq : frequencias) {
+
+            g.setColor(freq.getCor());
+            g.fillRect(
+                    (int) (i * (jPanel1.getWidth() / frequencias.size())),
+                    (int) (15 * f + 10),
+                    (int) (jPanel1.getWidth() / frequencias.size()),
+                    30);
+            g.setColor(Color.black);
+            g.drawString(
+                    String.valueOf(freq.getTaxa()),
+                    (int) (i * (jPanel1.getWidth() / frequencias.size()) + (jPanel1.getWidth() / frequencias.size()) / 2 )-10,
+                    (int) (15 * f + 20 + 10)
+            );
+
+            i++;
+        }
+
     }
 
     /**
