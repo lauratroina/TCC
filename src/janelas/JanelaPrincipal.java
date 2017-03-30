@@ -138,7 +138,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         ArrayList<PontoAcesso> pas = new ArrayList<PontoAcesso>();
         pas.add(new PontoAcesso(15, 3));
-
+        pas.add(new PontoAcesso(28, 8));
+        
       
 
         CalculaForcaBruta(pas, paredes, 0.1);
