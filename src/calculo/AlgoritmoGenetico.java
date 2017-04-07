@@ -1,8 +1,8 @@
-package restoDaPorraToda;
+package calculo;
 
-import java.util.ArrayList;
+import estruturas.*;
 
-public abstract class AlgoritmoGenetico {
+public class AlgoritmoGenetico {
 
     int numeroGenes;
     int numeroIndividuos;
@@ -19,8 +19,14 @@ public abstract class AlgoritmoGenetico {
     double melhorIndividuo[];
     double melhorFitness;
     double prole[][];
+    FuncaoObjetivo avalia;
+    Planta planta;
 
-    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax) {
+    public double[] getMelhorIndividuo() {
+        return melhorIndividuo;
+    }
+
+    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, FuncaoObjetivo avalia, Planta planta) {
         this.numeroGenes = numeroGenes;
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
@@ -35,6 +41,8 @@ public abstract class AlgoritmoGenetico {
         this.fitnessDois = new double[numeroIndividuos];
         this.melhorFitness = -Double.MAX_VALUE;
         this.prole = new double[2][numeroGenes];
+        this.avalia = avalia;
+        this.planta = planta;
     }
 
     double inicializacaoUniforme(int gene) {
@@ -73,8 +81,6 @@ public abstract class AlgoritmoGenetico {
         return (individuoUm);
     }
 
-    abstract double avalia(double individuo[]);
-
     public void executa() {
         int geracaoAtual = 0;
         int individuoUm, individuoDois;
@@ -82,41 +88,41 @@ public abstract class AlgoritmoGenetico {
             for (int gene = 0; (gene < numeroGenes); gene++) {
                 populacaoUm[individuo][gene] = inicializacaoUniforme(gene);
             }
-            fitnessUm[individuo] = avalia(populacaoUm[individuo]);
+            fitnessUm[individuo] = avalia.avalia(populacaoUm[individuo], this.planta);
             if (fitnessUm[individuo] > melhorFitness) {
                 melhorIndividuo = populacaoUm[individuo].clone();
                 melhorFitness = fitnessUm[individuo];
             }
+        }
 
-            for (geracaoAtual = 1; geracaoAtual <= numeroGeracoes; geracaoAtual++) {
-                if (elitismo) {
-                    populacaoDois[0] = melhorIndividuo.clone();
-                    fitnessDois[0] = melhorFitness;
-                }
-                int i = elitismo ? 1 : 0;
-                while (i < numeroIndividuos) {
-                    individuoUm = selecaotorneio();
-                    do {
-                        individuoDois = selecaotorneio();
-                    } while (individuoUm == individuoDois);
-                    if (Math.random() < probabilidadeCrossover) {
-                        cruzamentoUmPonto(individuoUm, individuoDois);
-                        for (individuoUm = 0; ((individuoUm < 2) && (i < numeroIndividuos)); individuoUm++) {
-                            for (int gene = 0; (gene < numeroGenes); gene++) {
-                                populacaoDois[i][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[individuoUm][gene];
-                            }
-                            fitnessDois[i] = avalia(populacaoDois[i]);
-                            if (fitnessUm[individuo] > melhorFitness) {
-                                melhorIndividuo = populacaoUm[individuo].clone();
-                                melhorFitness = fitnessUm[individuo];
-                            }
-                            i++;
+        for (geracaoAtual = 1; geracaoAtual <= numeroGeracoes; geracaoAtual++) {
+            if (elitismo) {
+                populacaoDois[0] = melhorIndividuo.clone();
+                fitnessDois[0] = melhorFitness;
+            }
+            int individuo = elitismo ? 1 : 0;
+            while (individuo < numeroIndividuos) {
+                individuoUm = selecaotorneio();
+                do {
+                    individuoDois = selecaotorneio();
+                } while (individuoUm == individuoDois);
+                if (Math.random() < probabilidadeCrossover) {
+                    cruzamentoUmPonto(individuoUm, individuoDois);
+                    for (individuoUm = 0; ((individuoUm < 2) && (individuo < numeroIndividuos)); individuoUm++) {
+                        for (int gene = 0; (gene < numeroGenes); gene++) {
+                            populacaoDois[individuo][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[individuoUm][gene];
                         }
+                        fitnessDois[individuo] = avalia.avalia(populacaoDois[individuo], this.planta);
+                        if (fitnessUm[individuo] > melhorFitness) {
+                            melhorIndividuo = populacaoUm[individuo].clone();
+                            melhorFitness = fitnessUm[individuo];
+                        }
+                        individuo++;
                     }
                 }
-                populacaoUm = populacaoDois.clone();
             }
-
+            populacaoUm = populacaoDois.clone();
+            System.out.println("Geração " + geracaoAtual);
         }
 
     }

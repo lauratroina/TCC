@@ -1,6 +1,7 @@
 package janelas;
 
-import restoDaPorraToda.MontaParede;
+import calculo.AlgoritmoGenetico;
+import calculo.Cost231;
 import estruturas.*;
 import java.awt.Graphics;
 import java.io.File;
@@ -10,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JPanel;
+import sun.security.pkcs11.P11TlsKeyMaterialGenerator;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -114,124 +117,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JanelaAjustes ajustes = new JanelaAjustes();
-        ajustes.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        File arquivo = null;
-        JFileChooser seletorArquivo = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos XML", "xml");
-        seletorArquivo.setFileFilter(filtro);
-        int retorno = seletorArquivo.showOpenDialog(jPanel1);
-        ArrayList<Parede> paredes = new ArrayList<Parede>();
-        if (retorno == JFileChooser.APPROVE_OPTION) {
-            arquivo = seletorArquivo.getSelectedFile();
-            jTextField1.setText(arquivo.getName());
-            paredes = new MontaParede().Monta(arquivo);
-        }
-
-        ArrayList<PontoAcesso> pas = new ArrayList<PontoAcesso>();
-        pas.add(new PontoAcesso(15, 3));
-        pas.add(new PontoAcesso(28, 8));
-        
-      
-
-        CalculaForcaBruta(pas, paredes, 0.1);
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private static int interseccao(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
-            double y4) {
-        double d = (x4 - x3) * (y1 - y2) - (x1 - x2) * (y4 - y3);
-        if (d == 0) {
-            return 0;
-        }
-        double ta = ((y3 - y4) * (x1 - x3) + (x4 - x3) * (y1 - y3)) / d;
-        double tb = ((y1 - y2) * (x1 - x3) + (x2 - x1) * (y1 - y3)) / d;
-        return (((ta >= 0) && (ta <= 1)) && ((tb >= 0) && (tb <= 1))) ? 1 : 0;
-    }
-
-    private void CalculaForcaBruta(ArrayList<PontoAcesso> pas, ArrayList<Parede> paredes, double d) {
-
-        ArrayList<Reta> retas = new ArrayList<Reta>();
-        ArrayList<Celula> celulas = new ArrayList<Celula>();
-
-        double mx = 0; // maximo x
-        double my = 0; // maximo y
-
-        for (Parede p : paredes) {
-            if (p.getX() + p.getLargura() > mx) {
-                mx = p.getX() + p.getLargura();
-            }
-            if (p.getY() + p.getAltura() > my) {
-                my = p.getY() + p.getAltura();
-            }
-            if (p.getLargura() > p.getAltura()) {
-                retas.add(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2, p.getPerda()));
-            }
-            if (p.getAltura() > p.getLargura()) {
-                retas.add(new Reta(p.getX() + p.getLargura() / 2, p.getY(), p.getX() + p.getLargura() / 2, p.getY() + p.getAltura(), p.getPerda()));
-            }
-        }
-
-        // popular celula
-        for (double i = 0; i < mx; i += d) {
-            for (double j = 0; j < my; j += d) {
-                celulas.add(new Celula(i, j));
-            }
-        }
-        double db = 0;
-        int cmaior24 = 0, cmenor0 = 0;
-        for (Celula c : celulas) {
-            for (PontoAcesso pa : pas) {
-                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + d / 2), 2) + Math.pow(pa.getY() - (c.getY() + d / 2), 2)));
-
-                for (Reta r : retas) {
-                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
-                }
-                if (db > c.getPotencia()) {
-                    c.setPotencia(db);
-                }
-            }
-
-            if (c.getPotencia() < -89) {
-                cmenor0++;
-            }
-            if (c.getPotencia() > -72) {
-                cmaior24++;
-            }
-        }
-
-        double f = Math.min(jPanel1.getWidth() / mx, jPanel1.getHeight() / my);
-        Graphics g = jPanel1.getGraphics();
-
-        DesenhaHeatMap(pas, celulas, d, f, g);
-        DesenhaParede(paredes, d, f, g);
-
-        /*for (Reta r : retas) {
-            g.setColor(Color.RED);
-            g.drawLine((int) (r.getX1() * f), (int) (r.getY1() * f), (int) (r.getX2() * f), (int) (r.getY2() * f));
-        }
-        for (Celula c : celulas) {
-            g.setColor(Color.YELLOW);
-            g.drawRect((int) (c.getX() * f), (int) (c.getY() * f), (int) (d * f), (int) (d * f));
-        }*/
-    }
-
-    private void DesenhaParede(ArrayList<Parede> paredes, double d, double f, Graphics g) {
+    private void DesenhaParedes(ArrayList<Parede> paredes, double d, double f, Graphics g) {
         for (Parede p : paredes) {
             g.setColor(Color.BLACK);
             g.fillRect((int) (p.getX() * f), (int) (p.getY() * f), (int) (p.getLargura() * f), (int) (p.getAltura() * f));
         }
     }
 
-    private void DesenhaHeatMap(ArrayList<PontoAcesso> pas, ArrayList<Celula> celulas, double d, double f, Graphics g) {
+    private void DesenhaHeatMap(ArrayList<Celula> celulas, ArrayList<PontoAcesso> pas, double d, double f, Graphics g) {
 
         ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
         frequencias.add(new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
@@ -277,7 +170,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             g.setColor(Color.black);
             g.drawString(
                     String.valueOf(freq.getTaxa()),
-                    (int) (i * (jPanel1.getWidth() / frequencias.size()) + (jPanel1.getWidth() / frequencias.size()) / 2 )-10,
+                    (int) (i * (jPanel1.getWidth() / frequencias.size()) + (jPanel1.getWidth() / frequencias.size()) / 2) - 10,
                     (int) (15 * f + 20 + 10)
             );
 
@@ -285,6 +178,49 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
 
     }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JanelaAjustes ajustes = new JanelaAjustes();
+        ajustes.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        File arquivo = null;
+        Planta planta = new Planta();
+        JFileChooser seletorArquivo = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos XML", "xml");
+        seletorArquivo.setFileFilter(filtro);
+        int retorno = seletorArquivo.showOpenDialog(jPanel1);
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            arquivo = seletorArquivo.getSelectedFile();
+            jTextField1.setText(arquivo.getName());
+            planta.Monta(arquivo, 0.5);
+
+        }
+        AlgoritmoGenetico ag = new AlgoritmoGenetico();
+
+        double[][] minMax = {{0, planta.mx}, {0, planta.my}, {0, planta.mx}, {0, planta.my}};
+        ag.inicializa(4, 100, 200, 0.9, 0.01, 2, true, minMax, new Cost231(), planta);
+        ag.executa();
+
+        planta.pas = new ArrayList<PontoAcesso>();
+        for (int i = 0; i < (ag.getMelhorIndividuo().length / 2); i++) {
+            planta.pas.add(new PontoAcesso(ag.getMelhorIndividuo()[i * 2], ag.getMelhorIndividuo()[i * 2 + 1]));
+        }
+        String posicao = "";
+        for (PontoAcesso pa : planta.pas) {
+            posicao += "X: " + pa.getX() + " Y: " + pa.getY();
+        }
+        System.out.println(posicao);
+        double f = Math.min(jPanel1.getWidth() / planta.mx, jPanel1.getHeight() / planta.my);
+        Graphics g = jPanel1.getGraphics();
+        DesenhaHeatMap(planta.celulas, planta.pas, 0.5, f, g);
+        DesenhaParedes(planta.paredes, 0.5, f, g);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
