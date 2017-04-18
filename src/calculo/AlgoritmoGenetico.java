@@ -4,6 +4,14 @@ import estruturas.*;
 
 public class AlgoritmoGenetico {
 
+    //para cada tupla do prod cartesiano, 10 execuções
+    //para cada geração, piorfitness, fitnessmédio, maiorfitness, melhorfitness
+    //numeroGenes = 2, 4, 6
+    //numeroIndividuos = 25, 50, 100
+    //numeroGeracoes = 50, 100, 150, 200
+    //probabilidadeMutacao = 0.001, 0.01, 0.05
+    //elitismo = 0, 1
+    
     int numeroGenes;
     int numeroIndividuos;
     int numeroGeracoes;
