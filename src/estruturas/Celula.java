@@ -1,4 +1,5 @@
 package estruturas;
+
 public class Celula {
 	private double x, y, potencia, taxa;
 		

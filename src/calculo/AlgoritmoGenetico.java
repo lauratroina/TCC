@@ -83,7 +83,6 @@ public class AlgoritmoGenetico {
 
     public void executa() {
         int geracaoAtual = 0;
-        int individuoUm, individuoDois;
         for (int individuo = 0; (individuo < numeroIndividuos); individuo++) {
             for (int gene = 0; (gene < numeroGenes); gene++) {
                 populacaoUm[individuo][gene] = inicializacaoUniforme(gene);
@@ -102,28 +101,41 @@ public class AlgoritmoGenetico {
             }
             int individuo = elitismo ? 1 : 0;
             while (individuo < numeroIndividuos) {
-                individuoUm = selecaotorneio();
+                int individuoUm = selecaotorneio(), individuoDois;
                 do {
                     individuoDois = selecaotorneio();
                 } while (individuoUm == individuoDois);
                 if (Math.random() < probabilidadeCrossover) {
                     cruzamentoUmPonto(individuoUm, individuoDois);
-                    for (individuoUm = 0; ((individuoUm < 2) && (individuo < numeroIndividuos)); individuoUm++) {
+
+                    for (int filho = 0; ((filho < 2) && (individuo < numeroIndividuos)); filho++) {
                         for (int gene = 0; (gene < numeroGenes); gene++) {
-                            populacaoDois[individuo][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[individuoUm][gene];
+                            populacaoDois[individuo][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[filho][gene];
                         }
                         fitnessDois[individuo] = avalia.avalia(populacaoDois[individuo], this.planta);
-                        if (fitnessUm[individuo] > melhorFitness) {
-                            melhorIndividuo = populacaoUm[individuo].clone();
-                            melhorFitness = fitnessUm[individuo];
+                        if (fitnessDois[individuo] > melhorFitness) {
+                            melhorIndividuo = populacaoDois[individuo].clone();
+                            melhorFitness = fitnessDois[individuo];
                         }
                         individuo++;
                     }
                 }
             }
             populacaoUm = populacaoDois.clone();
-            System.out.println("Geração " + geracaoAtual);
+            System.out.printf("Geração %d: ", geracaoAtual);
+            System.out.printf("[ ");
+            System.out.printf("{ x: %.2f, y: %.2f }, ", melhorIndividuo[0], melhorIndividuo[1]);
+            System.out.printf("{ x: %.2f, y: %.2f } ", melhorIndividuo[2], melhorIndividuo[3]);
+            System.out.printf("] = %.5f\n", melhorFitness);
+
         }
+
+        /*
+        *************************************************
+        ********** GAMBIARRA
+        *************************************************
+        */
+        this.avalia.avalia(melhorIndividuo, this.planta);
 
     }
 

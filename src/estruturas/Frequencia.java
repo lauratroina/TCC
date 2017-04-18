@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Frequencia {
     
-    private  int limiteInfeior, limiteSuperior, taxa;
+    private int limiteInfeior, limiteSuperior, taxa;
     private Color cor;
     
     public Frequencia(int limiteInferior, int limiteSuperior, int taxa, Color cor){
@@ -45,9 +45,5 @@ public class Frequencia {
     public void setCor(Color cor) {
         this.cor = cor;
     }
-    
-    
-    
-    
     
 }

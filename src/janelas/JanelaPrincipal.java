@@ -7,12 +7,9 @@ import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JPanel;
-import sun.security.pkcs11.P11TlsKeyMaterialGenerator;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -205,16 +202,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         double[][] minMax = {{0, planta.mx}, {0, planta.my}, {0, planta.mx}, {0, planta.my}};
         ag.inicializa(4, 100, 200, 0.9, 0.01, 2, true, minMax, new Cost231(), planta);
         ag.executa();
-
+        
         planta.pas = new ArrayList<PontoAcesso>();
         for (int i = 0; i < (ag.getMelhorIndividuo().length / 2); i++) {
             planta.pas.add(new PontoAcesso(ag.getMelhorIndividuo()[i * 2], ag.getMelhorIndividuo()[i * 2 + 1]));
         }
-        String posicao = "";
-        for (PontoAcesso pa : planta.pas) {
-            posicao += "X: " + pa.getX() + " Y: " + pa.getY();
-        }
-        System.out.println(posicao);
         double f = Math.min(jPanel1.getWidth() / planta.mx, jPanel1.getHeight() / planta.my);
         Graphics g = jPanel1.getGraphics();
         DesenhaHeatMap(planta.celulas, planta.pas, 0.5, f, g);

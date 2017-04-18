@@ -1,11 +1,7 @@
 package estruturas;
 
 import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.io.File;
-import javax.swing.JPanel;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,7 +33,6 @@ public class Planta {
                     double largura = Double.parseDouble(parede.getAttribute("largura"));
                     double perda = Double.parseDouble(parede.getAttribute("perda"));
                     this.paredes.add(new Parede(x, y, largura, altura, perda));
-
                 }
             }
 

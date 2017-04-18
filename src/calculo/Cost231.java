@@ -6,19 +6,22 @@ import java.util.ArrayList;
 public class Cost231 implements FuncaoObjetivo {
 
     public double avalia(double individuo[], Planta planta) {
-        planta.pas = new ArrayList<PontoAcesso>();
-
-        for(Celula c: planta.celulas){
+        for (Celula c : planta.celulas) {
             c.setPotencia(-1000);
         }
 
-        for (int i = 0; i < (individuo.length / 2); i++) {
-            planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
-        }
-        
+        //planta.pas = new ArrayList<PontoAcesso>();
+        //for (int i = 0; i < (individuo.length / 2); i++) {
+        //    planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
+        //}
+
+        planta.pas = new ArrayList<PontoAcesso>();
+        planta.pas.add(new PontoAcesso(individuo[0], individuo[1]));
+        planta.pas.add(new PontoAcesso(individuo[2], individuo[3]));
+
         double db = 0;
         int cmaior24 = 0, cmenor0 = 0;
-            for (Celula c : planta.celulas) {
+        for (Celula c : planta.celulas) {
             for (PontoAcesso pa : planta.pas) {
                 db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + planta.d / 2), 2)));
 
@@ -38,7 +41,7 @@ public class Cost231 implements FuncaoObjetivo {
                 cmaior24++;
             }
         }
-        double qualidade = (100.0 * (cmaior24) / planta.celulas.size()) - 1000.0 * (cmenor0 / planta.celulas.size());    
+        double qualidade = (100.0 * (cmaior24) / planta.celulas.size()) - 1000.0 * (cmenor0 / planta.celulas.size());
         return qualidade;
     }
 
