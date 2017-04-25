@@ -136,13 +136,6 @@ public class AlgoritmoGenetico {
 
         }
 
-        /*
-        *************************************************
-        ********** GAMBIARRA
-        *************************************************
-        */
-        //this.funcaoObjetivo.avalia(melhorIndividuo, funcaoObjetivo.planta);
-
     }
 
 }
