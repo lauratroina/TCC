@@ -27,14 +27,13 @@ public class AlgoritmoGenetico {
     double melhorIndividuo[];
     double melhorFitness;
     double prole[][];
-    FuncaoObjetivo avalia;
-    Planta planta;
+    FuncaoObjetivo funcaoObjetivo;
 
     public double[] getMelhorIndividuo() {
         return melhorIndividuo;
     }
 
-    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, FuncaoObjetivo avalia, Planta planta) {
+    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, Problema problema) {
         this.numeroGenes = numeroGenes;
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
@@ -49,8 +48,7 @@ public class AlgoritmoGenetico {
         this.fitnessDois = new double[numeroIndividuos];
         this.melhorFitness = -Double.MAX_VALUE;
         this.prole = new double[2][numeroGenes];
-        this.avalia = avalia;
-        this.planta = planta;
+        this.funcaoObjetivo = problema;
     }
 
     double inicializacaoUniforme(int gene) {
@@ -95,7 +93,7 @@ public class AlgoritmoGenetico {
             for (int gene = 0; (gene < numeroGenes); gene++) {
                 populacaoUm[individuo][gene] = inicializacaoUniforme(gene);
             }
-            fitnessUm[individuo] = avalia.avalia(populacaoUm[individuo], this.planta);
+            fitnessUm[individuo] = funcaoObjetivo.avalia(populacaoUm[individuo]);
             if (fitnessUm[individuo] > melhorFitness) {
                 melhorIndividuo = populacaoUm[individuo].clone();
                 melhorFitness = fitnessUm[individuo];
@@ -120,7 +118,7 @@ public class AlgoritmoGenetico {
                         for (int gene = 0; (gene < numeroGenes); gene++) {
                             populacaoDois[individuo][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[filho][gene];
                         }
-                        fitnessDois[individuo] = avalia.avalia(populacaoDois[individuo], this.planta);
+                        fitnessDois[individuo] = funcaoObjetivo.avalia(populacaoDois[individuo]);
                         if (fitnessDois[individuo] > melhorFitness) {
                             melhorIndividuo = populacaoDois[individuo].clone();
                             melhorFitness = fitnessDois[individuo];
@@ -143,7 +141,7 @@ public class AlgoritmoGenetico {
         ********** GAMBIARRA
         *************************************************
         */
-        this.avalia.avalia(melhorIndividuo, this.planta);
+        //this.funcaoObjetivo.avalia(melhorIndividuo, funcaoObjetivo.planta);
 
     }
 

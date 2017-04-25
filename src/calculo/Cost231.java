@@ -3,30 +3,27 @@ package calculo;
 import estruturas.*;
 import java.util.ArrayList;
 
-public class Cost231 implements FuncaoObjetivo {
+public class Cost231 extends Problema {
 
-    public double avalia(double individuo[], Planta planta) {
-        for (Celula c : planta.celulas) {
+    @Override
+    public double avalia(double individuo[]) {
+        for (Celula c : this.planta.celulas) {
             c.setPotencia(-1000);
         }
 
-        //planta.pas = new ArrayList<PontoAcesso>();
-        //for (int i = 0; i < (individuo.length / 2); i++) {
-        //    planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
-        //}
-
-        planta.pas = new ArrayList<PontoAcesso>();
-        planta.pas.add(new PontoAcesso(individuo[0], individuo[1]));
-        planta.pas.add(new PontoAcesso(individuo[2], individuo[3]));
+        this.planta.pas = new ArrayList<PontoAcesso>();
+        for (int i = 0; i < (individuo.length / 2); i++) {
+            this.planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
+        }
 
         double db = 0;
         int cmaior24 = 0, cmenor0 = 0;
-        for (Celula c : planta.celulas) {
-            for (PontoAcesso pa : planta.pas) {
-                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + planta.d / 2), 2)));
+        for (Celula c : this.planta.celulas) {
+            for (PontoAcesso pa : this.planta.pas) {
+                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2)));
 
-                for (Reta r : planta.retas) {
-                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + planta.d / 2, c.getY() + planta.d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
+                for (Parede p : this.planta.paredes) {
+                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.d / 2, c.getY() + this.planta.d / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()) * p.getPerda();
                 }
 
                 if (db > c.getPotencia()) {
@@ -41,7 +38,7 @@ public class Cost231 implements FuncaoObjetivo {
                 cmaior24++;
             }
         }
-        double qualidade = (100.0 * (cmaior24) / planta.celulas.size()) - 1000.0 * (cmenor0 / planta.celulas.size());
+        double qualidade = (100.0 * (cmaior24) / this.planta.celulas.size()) - 1000.0 * (cmenor0 / this.planta.celulas.size());
         return qualidade;
     }
 

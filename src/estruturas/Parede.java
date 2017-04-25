@@ -3,6 +3,7 @@ package estruturas;
 public class Parede {
 
     private double x, y, altura, largura, perda;
+    private Reta reta;
 
     public Parede(double x, double y, double largura, double altura, double perda) {
         this.x = x;
@@ -50,6 +51,14 @@ public class Parede {
 
     public void setPerda(double perda) {
         this.perda = perda;
+    }
+    
+    public Reta getReta(){
+        return reta;
+    }
+    
+    public void setReta(Reta reta){
+        this.reta = reta;
     }
 
 }

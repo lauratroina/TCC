@@ -11,7 +11,6 @@ import org.w3c.dom.NodeList;
 public class Planta {
 
     public ArrayList<Parede> paredes;
-    public ArrayList<Reta> retas;
     public ArrayList<Celula> celulas;
     public ArrayList<PontoAcesso> pas;
     public double mx, my, d;
@@ -36,7 +35,6 @@ public class Planta {
                 }
             }
 
-            this.retas = new ArrayList<Reta>();
             this.celulas = new ArrayList<Celula>();
 
             this.mx = 0; // maximo x
@@ -50,10 +48,10 @@ public class Planta {
                     my = p.getY() + p.getAltura();
                 }
                 if (p.getLargura() > p.getAltura()) {
-                    this.retas.add(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2, p.getPerda()));
+                    p.setReta(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2));
                 }
                 if (p.getAltura() > p.getLargura()) {
-                    this.retas.add(new Reta(p.getX() + p.getLargura() / 2, p.getY(), p.getX() + p.getLargura() / 2, p.getY() + p.getAltura(), p.getPerda()));
+                    p.setReta(new Reta(p.getX() + p.getLargura() / 2, p.getY(), p.getX() + p.getLargura() / 2, p.getY() + p.getAltura()));
                 }
             }
 

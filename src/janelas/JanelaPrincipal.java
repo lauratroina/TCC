@@ -2,6 +2,7 @@ package janelas;
 
 import calculo.AlgoritmoGenetico;
 import calculo.Cost231;
+import calculo.Problema;
 import estruturas.*;
 import java.awt.Graphics;
 import java.io.File;
@@ -185,8 +186,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Problema problemaCost = new Cost231();
         File arquivo = null;
-        Planta planta = new Planta();
+        problemaCost.planta = new Planta();
         JFileChooser seletorArquivo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos XML", "xml");
         seletorArquivo.setFileFilter(filtro);
@@ -194,23 +196,26 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         if (retorno == JFileChooser.APPROVE_OPTION) {
             arquivo = seletorArquivo.getSelectedFile();
             jTextField1.setText(arquivo.getName());
-            planta.Monta(arquivo, 0.5);
-
+            problemaCost.planta.Monta(arquivo, 0.5);
         }
+        
         AlgoritmoGenetico ag = new AlgoritmoGenetico();
 
-        double[][] minMax = {{0, planta.mx}, {0, planta.my}, {0, planta.mx}, {0, planta.my}};
-        ag.inicializa(4, 100, 200, 0.9, 0.01, 2, true, minMax, new Cost231(), planta);
+        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my}, {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
+        
+        ag.inicializa(4, 100, 200, 0.9, 0.01, 2, true, minMax, problemaCost);
         ag.executa();
         
-        planta.pas = new ArrayList<PontoAcesso>();
+        problemaCost.avalia(ag.getMelhorIndividuo());
+        
+        problemaCost.planta.pas = new ArrayList<PontoAcesso>();
         for (int i = 0; i < (ag.getMelhorIndividuo().length / 2); i++) {
-            planta.pas.add(new PontoAcesso(ag.getMelhorIndividuo()[i * 2], ag.getMelhorIndividuo()[i * 2 + 1]));
+            problemaCost.planta.pas.add(new PontoAcesso(ag.getMelhorIndividuo()[i * 2], ag.getMelhorIndividuo()[i * 2 + 1]));
         }
-        double f = Math.min(jPanel1.getWidth() / planta.mx, jPanel1.getHeight() / planta.my);
+        double f = Math.min(jPanel1.getWidth() / problemaCost.planta.mx, jPanel1.getHeight() / problemaCost.planta.my);
         Graphics g = jPanel1.getGraphics();
-        DesenhaHeatMap(planta.celulas, planta.pas, 0.5, f, g);
-        DesenhaParedes(planta.paredes, 0.5, f, g);
+        DesenhaHeatMap(problemaCost.planta.celulas, problemaCost.planta.pas, problemaCost.planta.d, f, g);
+        DesenhaParedes(problemaCost.planta.paredes, problemaCost.planta.d, f, g);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -2,14 +2,14 @@ package estruturas;
 
 public class Reta {
 
-    private double x1, y1, x2, y2, p;
+    private double x1, y1, x2, y2;
 
-    public Reta(double x1, double y1, double x2, double y2, double p) {
+    public Reta(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-        this.p = p;
+        
     }
 
     public double getX1() {
@@ -44,12 +44,6 @@ public class Reta {
         this.y2 = y2;
     }
 
-    public double getP() {
-        return p;
-    }
-
-    public void setP(double p) {
-        this.p = p;
-    }
+    
 
 }
