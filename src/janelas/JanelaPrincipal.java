@@ -201,10 +201,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         
         AlgoritmoGenetico ag = new AlgoritmoGenetico();
 
-        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my}, {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
+        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my}, 
+                            {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
+                            {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
         
-        ag.inicializa(4, 100, 200, 0.9, 0.01, 2, true, minMax, problemaCost);
-        ag.executa();
+        //ag.inicializa(2, 25, 50, 0.9, 0.001, 2, false, minMax, problemaCost);
+        //inicializa(numeroGenes, numeroIndividuos, numeroGeracoes, probabilidadeCrossover, 
+        //probabilidadeMutacao, numeroIndividuosSelecionados, elitismo {
+        
+        for(int c = 0; c<10; c++){
+           // System.out.printf("Execução = %d\n", c);
+            ag.inicializa(6, 100, 200, 0.9, 0.05, 2, false, minMax, problemaCost);  
+       
+            ag.executa();
+            
+            
+        }
         
         problemaCost.avalia(ag.getMelhorIndividuo());
         
