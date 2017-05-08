@@ -1,0 +1,65 @@
+\begin{thebibliography}{\hspace{\parindent}}
+
+\bibitem[ASSUMPÇÃO~FILHO(1997)ASSUMPÇÃO~FILHO]{brisa1997redes}
+  ASSUMPÇÃO~FILHO, M.~M\@.~(Ed.). \textbf{Arquitetura de Redes de
+  Computadores OSI e TCP/IP}. 2.ed. São Paulo: Makron Books, 1997.
+
+\bibitem[FREYTAG; SAWICKI~FREYTAG; MARTINS(2013)FREYTAG; SAWICKI~FREYTAG;
+  MARTINS]{freytag2013desenvolvimento} FREYTAG, G.; SAWICKI~FREYTAG, S.;
+  MARTINS, R\@. Desenvolvimento de uma interface gráfica iterativa para o
+  posicionamento de antena wireless. \textbf{Salão do Conhecimento}, [S.l.],
+  v.1, n.01, 2013.
+
+\bibitem[HAYKIN; MOHER(2009)HAYKIN; MOHER]{haykin2009sistemas} HAYKIN, S.;
+  MOHER, M\@. \textbf{Sistemas modernos de comunica{\c{c}}{\~o}es wireless}.
+  [S.l.]: Bookman Editora, 2009.
+
+\bibitem[JI; SARKAR; LI(2002)JI; SARKAR; LI]{ji2002methods} JI, Z.; SARKAR,
+  T.~K.; LI, B.-H\@. Methods for optimizing the location of base stations for
+  indoor wireless communications. \textbf{IEEE Transactions on Antennas and
+  Propagation}, [S.l.], v.50, n.10, p.1481--1483, 2002.
+
+\bibitem[JÚNIOR; LOPES(2008)JÚNIOR; LOPES]{junior2008proposta} JÚNIOR, N.
+  B.~A.; LOPES, H\@. \textbf{Proposta e Implementação de um Algoritmo
+  Paralelo de Busca Exaustiva Para o Problema do Dobramento de Proteínas com
+  um Modelo Discreto}. 2008. Tese (Doutorado em Ci{\^e}ncia da
+  Computa{\c{c}}{\~a}o) --- Tese, Curso de Pós-graduaçãoo em Engenharia
+  Elétrica e Informática Industrial, UTFPR, PR.
+
+\bibitem[LUKE(2009)LUKE]{luke2009metaheuristics} LUKE, S\@. \textbf{Essentials
+  of Metaheuristics}. [S.l.:~s.n.], 2009.
+
+\bibitem[MITCHELL(1998)MITCHELL]{mitchell1998introduction} MITCHELL, M\@.
+  \textbf{An introduction to genetic algorithms}. [S.l.]: MIT press, 1998.
+
+\bibitem[NAGY(2012)NAGY]{nagy2012global} NAGY, L\@. Global optimization of
+  indoor radio coverage. \textbf{AUTOMATIKA}, [S.l.], v.53, n.1, p.69--79,
+  2012.
+
+\bibitem[NAJNUDEL(2004)NAJNUDEL]{najnudel2004estudo} NAJNUDEL, M\@.
+  \textbf{Estudo de propagação em ambientes fechados para o planejamento de
+  WLANs}. 2004. Tese (Doutorado em Ci{\^e}ncia da Computa{\c{c}}{\~a}o) ---
+  Dissertação (mestrado), Departamento de Engenharia Elétrica, Pontífica
+  Universidade Católica do Rio de Janeiro.
+
+\bibitem[RAPPAPORT(2009)RAPPAPORT]{rappaport2009comunicacoes} RAPPAPORT,
+  T.~S\@. \textbf{Comunicações sem fio}: princípios e práticas. São Paulo:
+  Pearson Prentice Hall, 2009.
+
+\bibitem[SANCHES(2005)SANCHES]{sanches2005projetando} SANCHES, C.~A\@.
+  \textbf{Projetando Redes WLAN}: conceitos e práticas. São Paulo: Érica,
+  2005.
+
+\bibitem[TANENBAUM(2003)TANENBAUM]{tanenbaum2003redes} TANENBAUM, A\@.
+  \textbf{Redes de Computadores}. 4.ed. São Paulo: Elsevier, 2003.
+
+\bibitem[TORRES(2015)TORRES]{torres2015redes} TORRES, G\@. \textbf{Redes de
+  computadores}: versão revisada e atualizada. 2.ed. São Paulo: Novaterra
+  Editora e Distribuidora LTDA, 2015.
+
+\bibitem[VELLASCO; PACHECO; CUNHA~FILHO(2010)VELLASCO; PACHECO;
+  CUNHA~FILHO]{vellasco2010dimensionamento} VELLASCO, M.~M.; PACHECO, M.~A.;
+  CUNHA~FILHO, G.~F.~da. Dimensionamento Otimizado de Redes de Comunicação
+  sem fio 802.11 usando Algoritmos Genéticos. , [S.l.], 2010.
+
+\end{thebibliography}

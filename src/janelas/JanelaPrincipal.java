@@ -198,28 +198,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jTextField1.setText(arquivo.getName());
             problemaCost.planta.Monta(arquivo, 0.5);
         }
-        
+
         AlgoritmoGenetico ag = new AlgoritmoGenetico();
 
-        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my}, 
-                            {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-                            {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
-        
+        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
+        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
+        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
+
         //ag.inicializa(2, 25, 50, 0.9, 0.001, 2, false, minMax, problemaCost);
         //inicializa(numeroGenes, numeroIndividuos, numeroGeracoes, probabilidadeCrossover, 
         //probabilidadeMutacao, numeroIndividuosSelecionados, elitismo {
-        
-        for(int c = 0; c<10; c++){
-           // System.out.printf("Execução = %d\n", c);
-            ag.inicializa(6, 100, 200, 0.9, 0.05, 2, false, minMax, problemaCost);  
-       
+        // System.out.printf("Execução = %d\n", c);
+        for (int c = 0; c < 10; c++) {
+            ag.inicializa(6, 30, 65, 0.9, 0.01, 5, true, minMax, problemaCost);
             ag.executa();
-            
-            
         }
-        
         problemaCost.avalia(ag.getMelhorIndividuo());
-        
+
         problemaCost.planta.pas = new ArrayList<PontoAcesso>();
         for (int i = 0; i < (ag.getMelhorIndividuo().length / 2); i++) {
             problemaCost.planta.pas.add(new PontoAcesso(ag.getMelhorIndividuo()[i * 2], ag.getMelhorIndividuo()[i * 2 + 1]));

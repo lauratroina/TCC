@@ -95,7 +95,7 @@ public class AlgoritmoGenetico {
                 melhorFitness = fitnessUm[individuo];
             }
         }
-
+        //System.out.printf("Melhor fitness: %.5f\n", melhorFitness);
         for (geracaoAtual = 1; geracaoAtual <= numeroGeracoes; geracaoAtual++) {
 
             if (elitismo) {
