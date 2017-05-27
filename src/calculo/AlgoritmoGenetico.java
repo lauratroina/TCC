@@ -68,7 +68,7 @@ public class AlgoritmoGenetico {
             }
         }
     }
-
+    
     int selecaotorneio() {
         int individuoUm, individuoDois;
         individuoUm = (int) (Math.random() * numeroIndividuos);
@@ -95,7 +95,6 @@ public class AlgoritmoGenetico {
                 melhorFitness = fitnessUm[individuo];
             }
         }
-        //System.out.printf("Melhor fitness: %.5f\n", melhorFitness);
         for (geracaoAtual = 1; geracaoAtual <= numeroGeracoes; geracaoAtual++) {
 
             if (elitismo) {
