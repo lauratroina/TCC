@@ -16,7 +16,7 @@ public class Parametros {
     private int taxaAceitavel;
     private double intervaloHillClimbing;
 
-    public Parametros(int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, FuncaoObjetivo metodoCalculo, double discretizacao, int taxaDesejada, int taxaAceitavel, double intervaloHillClimbing) {
+    public void setarParametros(int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, FuncaoObjetivo metodoCalculo, int taxaDesejada, int taxaAceitavel, double intervaloHillClimbing) {
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
         this.probabilidadeCrossover = probabilidadeCrossover;
@@ -24,12 +24,10 @@ public class Parametros {
         this.numeroIndividuosSelecionados = numeroIndividuosSelecionados;
         this.elitismo = elitismo;
         this.metodoCalculo = metodoCalculo;
-        this.discretizacao = discretizacao;
         this.taxaDesejada = taxaDesejada;
         this.taxaAceitavel = taxaAceitavel;
         this.intervaloHillClimbing = intervaloHillClimbing;
     }
-
 
     public int getNumeroIndividuos() {
         return numeroIndividuos;
@@ -67,6 +65,10 @@ public class Parametros {
     public double getDiscretizacao() {
         return discretizacao;
     }
+    
+    public void setDiscretizacao(double discretizacao){
+        this.discretizacao = discretizacao;
+    }
 
 
     public int getTaxaDesejada() {
@@ -84,4 +86,5 @@ public class Parametros {
     }
 
 
+    
 }

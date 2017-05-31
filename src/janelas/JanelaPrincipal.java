@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JOptionPane;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -22,6 +23,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public JanelaPrincipal(Parametros parametros) {
         this.parametros = parametros;
         initComponents();
+        jbExportar.setEnabled(false);
+        jbCalcular.setEnabled(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +37,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jtEntradaXml = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jbConfig = new javax.swing.JButton();
-        jbExporta = new javax.swing.JButton();
+        jbExportar = new javax.swing.JButton();
         jbCalcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,8 +79,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jbExporta.setText("Exportar");
-        jbExporta.setPreferredSize(new java.awt.Dimension(180, 30));
+        jbExportar.setText("Exportar");
+        jbExportar.setPreferredSize(new java.awt.Dimension(180, 30));
 
         jbCalcular.setText("Calcular");
         jbCalcular.setPreferredSize(new java.awt.Dimension(180, 30));
@@ -101,7 +105,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jbConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96)
-                        .addComponent(jbExporta, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -118,7 +122,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbExporta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -208,6 +212,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jtEntradaXmlActionPerformed
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
+
+        parametros.setDiscretizacao(Double.parseDouble(JOptionPane.showInputDialog("Entre com discretização da planta")));
         File arquivo = null;
         Planta planta = new Planta();
         JFileChooser seletorArquivo = new JFileChooser();
@@ -217,17 +223,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         if (retorno == JFileChooser.APPROVE_OPTION) {
             arquivo = seletorArquivo.getSelectedFile();
             jtEntradaXml.setText(arquivo.getName());
-            planta.Monta(arquivo, 0.5);
+            planta.Monta(arquivo, parametros.getDiscretizacao());
+
         }
 
-        
+        double fatorDeCorrecao = Math.min(jPanel1.getWidth() / planta.mx, jPanel1.getHeight() / planta.my);
+        Graphics g = jPanel1.getGraphics();
+        DesenhaParedes(planta.paredes, parametros.getDiscretizacao(), fatorDeCorrecao, g);
+
+
     }//GEN-LAST:event_jbAbrirActionPerformed
 
     private void jbCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalcularActionPerformed
+
         algoritmoGenetico = new AlgoritmoGenetico();
         problemaCost = new Cost231();
         problemaCost.planta = planta;
-        
+
         double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
         {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
         {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
@@ -239,9 +251,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         //inicializa(numeroGenes, numeroIndividuos, numeroGeracoes, probabilidadeCrossover, 
         //probabilidadeMutacao, numeroIndividuosSelecionados, elitismo {
         // System.out.printf("Execução = %d\n", c);
-        
         algoritmoGenetico.inicializa(12, parametros.getNumeroIndividuos(), 100, 0.9, 0.08, 2, false, minMax, problemaCost);
-        
+
         algoritmoGenetico.inicializa(12, 50, 100, 0.9, 0.08, 2, false, minMax, problemaCost);
         algoritmoGenetico.executa();
         problemaCost.avalia(algoritmoGenetico.getMelhorIndividuo());
@@ -263,7 +274,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbAbrir;
     private javax.swing.JButton jbCalcular;
     private javax.swing.JButton jbConfig;
-    private javax.swing.JButton jbExporta;
+    private javax.swing.JButton jbExportar;
     private javax.swing.JTextField jtEntradaXml;
     // End of variables declaration//GEN-END:variables
+
 }

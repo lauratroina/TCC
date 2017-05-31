@@ -22,12 +22,13 @@ public class AlgoritmoGenetico {
     double maiorFitness;
     double menorFitness;
     double somaFitness;
+    BuscaLocal buscaLocal;
 
     public double[] getMelhorIndividuo() {
         return melhorIndividuo;
     }
 
-    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, Problema problema) {
+    public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, Problema problema, BuscaLocal buscaLocal) {
         this.numeroGenes = numeroGenes;
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
@@ -46,6 +47,7 @@ public class AlgoritmoGenetico {
         this.maiorFitness = -Double.MAX_VALUE;
         this.menorFitness = Double.MAX_VALUE;
         this.somaFitness = 0;
+        this.buscaLocal = buscaLocal;
     }
 
     double inicializacaoUniforme(int gene) {
