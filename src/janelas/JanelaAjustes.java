@@ -3,13 +3,16 @@ package janelas;
 import calculo.Cost231;
 import calculo.FuncaoObjetivo;
 import estruturas.Parametros;
+import javax.swing.JButton;
 
 public class JanelaAjustes extends javax.swing.JFrame {
 
     private Parametros parametros;
-    public JanelaAjustes(Parametros parametros) {
+    private JButton botao;
+    public JanelaAjustes(Parametros parametros, JButton botao) {
         initComponents();
         this.parametros = parametros;
+        this.botao = botao;
     }
 
     @SuppressWarnings("unchecked")
@@ -85,18 +88,39 @@ public class JanelaAjustes extends javax.swing.JFrame {
             }
         });
 
+        jtIndividuosSelecionados.setText("2");
         jtIndividuosSelecionados.setMinimumSize(new java.awt.Dimension(10, 25));
+        jtIndividuosSelecionados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtIndividuosSelecionadosActionPerformed(evt);
+            }
+        });
 
+        jtProbabilidadeMutacao.setText("0.01");
         jtProbabilidadeMutacao.setMinimumSize(new java.awt.Dimension(10, 25));
+        jtProbabilidadeMutacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtProbabilidadeMutacaoActionPerformed(evt);
+            }
+        });
 
+        jtProbabilidadeCrossover.setText("0.9");
         jtProbabilidadeCrossover.setMinimumSize(new java.awt.Dimension(10, 25));
 
+        jtNumeroGeracoes.setText("50");
         jtNumeroGeracoes.setMinimumSize(new java.awt.Dimension(10, 25));
 
+        jtNumeroIndividuos.setText("25");
         jtNumeroIndividuos.setMinimumSize(new java.awt.Dimension(10, 25));
         jtNumeroIndividuos.setPreferredSize(new java.awt.Dimension(10, 25));
 
+        jtElitismo.setSelected(true);
         jtElitismo.setText("Permitir elitismo");
+        jtElitismo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtElitismoActionPerformed(evt);
+            }
+        });
 
         jtMetodoCalculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ITU-r", "Cost 231" }));
         jtMetodoCalculo.addActionListener(new java.awt.event.ActionListener() {
@@ -115,17 +139,26 @@ public class JanelaAjustes extends javax.swing.JFrame {
         jLabel12.setText("Menor taxa de transferência aceitável");
         jLabel12.setPreferredSize(new java.awt.Dimension(275, 17));
 
+        jtTaxaDesejada.setText("24");
+        jtTaxaDesejada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtTaxaDesejadaActionPerformed(evt);
+            }
+        });
+
+        jtTaxaAceitavel.setText("0");
         jtTaxaAceitavel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtTaxaAceitavelActionPerformed(evt);
             }
         });
 
-        jLabel13.setText("Hill-Climbing");
+        jLabel13.setText("Passo Hill-Climbing");
         jLabel13.setPreferredSize(new java.awt.Dimension(275, 17));
 
         jLabel8.setText("Método para calcular a perda");
 
+        jtHillClimbing.setText("1");
         jtHillClimbing.setMinimumSize(new java.awt.Dimension(10, 25));
         jtHillClimbing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,18 +338,36 @@ public class JanelaAjustes extends javax.swing.JFrame {
         double probabilidadeCrossover = Double.parseDouble(this.jtProbabilidadeCrossover.getText());
         int individuosSelecionados = Integer.parseInt(this.jtIndividuosSelecionados.getText());
         boolean elitismo = this.jtElitismo.isSelected();
-        FuncaoObjetivo metodoCalculo = this.jtMetodoCalculo.getSelectedIndex() == 0 ? null: new Cost231();
+        int metodoCalculo = this.jtMetodoCalculo.getSelectedIndex();
         int taxaAceitavel = Integer.parseInt(this.jtTaxaAceitavel.getText());
         int taxaDesejada = Integer.parseInt(this.jtTaxaDesejada.getText());
         double hillClimbing = jtHillClimbing.getText().isEmpty() ?
         0 : Double.parseDouble(this.jtHillClimbing.getText());
 
-        parametros.setarParametros(numeroIndividuos, numeroGeracoes, probabilidadeCrossover,
+        parametros.setParametros(numeroIndividuos, numeroGeracoes, probabilidadeCrossover,
             probabilidadeMutacao, individuosSelecionados, elitismo, metodoCalculo,
             taxaDesejada, taxaAceitavel, hillClimbing);
+        
+        botao.setEnabled(true);
         this.setVisible(false);
 
     }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jtElitismoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtElitismoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtElitismoActionPerformed
+
+    private void jtProbabilidadeMutacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtProbabilidadeMutacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtProbabilidadeMutacaoActionPerformed
+
+    private void jtIndividuosSelecionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIndividuosSelecionadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtIndividuosSelecionadosActionPerformed
+
+    private void jtTaxaDesejadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtTaxaDesejadaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtTaxaDesejadaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

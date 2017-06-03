@@ -48,6 +48,7 @@ public class AlgoritmoGenetico {
         this.menorFitness = Double.MAX_VALUE;
         this.somaFitness = 0;
         this.buscaLocal = buscaLocal;
+        this.buscaLocal.setFuncaoObjetivo(this.funcaoObjetivo);
     }
 
     double inicializacaoUniforme(int gene) {
@@ -124,8 +125,8 @@ public class AlgoritmoGenetico {
                         for (int gene = 0; (gene < numeroGenes); gene++) {
                             populacaoDois[individuo][gene] = (Math.random() < probabilidadeMutacao) ? mutacaoUniforme(gene) : prole[filho][gene];
                         }
+                        buscaLocal.busca(populacaoDois[individuo], valorMinMax);
                         fitnessDois[individuo] = funcaoObjetivo.avalia(populacaoDois[individuo]);
-
                         /**
                          * Estatísticas*
                          */

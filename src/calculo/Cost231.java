@@ -17,7 +17,7 @@ public class Cost231 extends Problema {
         }
 
         double db = 0;
-        int cmaior24 = 0, cmenor0 = 0;
+        int cmaior = 0, cmenor = 0;
         for (Celula c : this.planta.celulas) {
             for (PontoAcesso pa : this.planta.pas) {
                 db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2)));
@@ -31,14 +31,14 @@ public class Cost231 extends Problema {
                 }
             }
 
-            if (c.getPotencia() < -89) {
-                cmenor0++;
+            if (c.getPotencia() < this.cmenor) {
+                cmenor++;
             }
-            if (c.getPotencia() > -72) {
-                cmaior24++;
+            if (c.getPotencia() > this.cmaior) {
+                cmaior++;
             }
         }
-        double qualidade = (100.0 * (cmaior24) / this.planta.celulas.size()) - 1000.0 * (cmenor0 / this.planta.celulas.size());
+        double qualidade = (100.0 * (cmaior) / this.planta.celulas.size()) - 1000.0 * (cmenor / this.planta.celulas.size());
         return qualidade;
     }
 

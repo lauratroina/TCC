@@ -1,8 +1,6 @@
 package janelas;
 
-import calculo.AlgoritmoGenetico;
-import calculo.Cost231;
-import calculo.Problema;
+import calculo.*;
 import estruturas.*;
 import java.awt.Graphics;
 import java.io.File;
@@ -11,17 +9,22 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
     private Parametros parametros;
-    private Problema problemaCost;
+    private Problema problema;
     private AlgoritmoGenetico algoritmoGenetico;
     private Planta planta;
+    private ArrayList<Frequencia> frequencias;
 
     public JanelaPrincipal(Parametros parametros) {
+
         this.parametros = parametros;
+        this.setIconImage(new ImageIcon(getClass().getResource("R2D2-icon.png")).getImage());
         initComponents();
         jbExportar.setEnabled(false);
         jbCalcular.setEnabled(false);
@@ -41,6 +44,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jbCalcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TCC - Laura");
         setResizable(false);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -149,8 +153,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     private void DesenhaHeatMap(ArrayList<Celula> celulas, ArrayList<PontoAcesso> pas, double d, double f, Graphics g) {
+        frequencias = new ArrayList<Frequencia>();
 
-        ArrayList<Frequencia> frequencias = new ArrayList<Frequencia>();
         frequencias.add(new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
         frequencias.add(new Frequencia(-66, -64, 48, new Color(255, 0, 0)));
         frequencias.add(new Frequencia(-70, -66, 36, new Color(255, 128, 0)));
@@ -203,7 +207,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     }
     private void jbConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigActionPerformed
-        JanelaAjustes ajustes = new JanelaAjustes(this.parametros);
+        JanelaAjustes ajustes = new JanelaAjustes(this.parametros, this.jbCalcular);
         ajustes.setVisible(true);
     }//GEN-LAST:event_jbConfigActionPerformed
 
@@ -213,9 +217,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
 
-        parametros.setDiscretizacao(Double.parseDouble(JOptionPane.showInputDialog("Entre com discretização da planta")));
+        parametros.setDiscretizacao(Double.parseDouble(JOptionPane.showInputDialog("Entre com discretização da planta", "1")));
         File arquivo = null;
-        Planta planta = new Planta();
+        planta = new Planta();
         JFileChooser seletorArquivo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos XML", "xml");
         seletorArquivo.setFileFilter(filtro);
@@ -237,34 +241,47 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void jbCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalcularActionPerformed
 
         algoritmoGenetico = new AlgoritmoGenetico();
-        problemaCost = new Cost231();
-        problemaCost.planta = planta;
 
-        double[][] minMax = {{0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my},
-        {0, problemaCost.planta.mx}, {0, problemaCost.planta.my}};
+        //IMPLMENTAR ITUUUUUUUUUUUUUUUU
+        problema = parametros.getMetodoCalculo() == 0 ? new Cost231() : new Cost231();
+        problema.planta = planta;
 
-        //ag.inicializa(2, 25, 50, 0.9, 0.001, 2, false, minMax, problemaCost);
-        //inicializa(numeroGenes, numeroIndividuos, numeroGeracoes, probabilidadeCrossover, 
-        //probabilidadeMutacao, numeroIndividuosSelecionados, elitismo {
-        // System.out.printf("Execução = %d\n", c);
-        algoritmoGenetico.inicializa(12, parametros.getNumeroIndividuos(), 100, 0.9, 0.08, 2, false, minMax, problemaCost);
+        HashMap<Integer, Frequencia> mapa = new HashMap<Integer, Frequencia>();
+        mapa.put(54, new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
+        mapa.put(48, new Frequencia(-66, -64, 48, new Color(255, 0, 0)));
+        mapa.put(36, new Frequencia(-70, -66, 36, new Color(255, 128, 0)));
+        mapa.put(24, new Frequencia(-72, -70, 24, new Color(255, 255, 0)));
+        mapa.put(18, new Frequencia(-76, -72, 18, new Color(128, 255, 128)));
+        mapa.put(12, new Frequencia(-80, -76, 12, new Color(0, 255, 255)));
+        mapa.put(9, new Frequencia(-84, -80, 9, new Color(0, 128, 255)));
+        mapa.put(6, new Frequencia(-89, -84, 6, new Color(0, 0, 255)));
+        mapa.put(0, new Frequencia(-1000, -89, 0, new Color(0, 0, 128)));
 
-        algoritmoGenetico.inicializa(12, 50, 100, 0.9, 0.08, 2, false, minMax, problemaCost);
+        problema.cmaior = mapa.get(parametros.getTaxaDesejada()).getLimiteInfeior();
+        problema.cmenor = mapa.get(parametros.getTaxaAceitavel()).getLimiteSuperior();
+
+        
+        HillClimbing buscaLocal = new HillClimbing();
+        buscaLocal.setPasso(parametros.getIntervaloHillClimbing());
+
+        double[][] minMax = {{0, problema.planta.mx}, {0, problema.planta.my},
+        {0, problema.planta.mx}, {0, problema.planta.my}};
+        algoritmoGenetico.inicializa(4, parametros.getNumeroIndividuos(),
+                parametros.getNumeroGeracoes(), parametros.getProbabilidadeCrossover(),
+                parametros.getProbabilidadeMutacao(), parametros.getNumeroIndividuosSelecionados(),
+                parametros.getElitismo(), minMax, problema, buscaLocal);
+
         algoritmoGenetico.executa();
-        problemaCost.avalia(algoritmoGenetico.getMelhorIndividuo());
+        problema.avalia(algoritmoGenetico.getMelhorIndividuo());
 
-        problemaCost.planta.pas = new ArrayList<PontoAcesso>();
+        problema.planta.pas = new ArrayList<PontoAcesso>();
         for (int i = 0; i < (algoritmoGenetico.getMelhorIndividuo().length / 2); i++) {
-            problemaCost.planta.pas.add(new PontoAcesso(algoritmoGenetico.getMelhorIndividuo()[i * 2], algoritmoGenetico.getMelhorIndividuo()[i * 2 + 1]));
+            problema.planta.pas.add(new PontoAcesso(algoritmoGenetico.getMelhorIndividuo()[i * 2], algoritmoGenetico.getMelhorIndividuo()[i * 2 + 1]));
         }
-        double f = Math.min(jPanel1.getWidth() / problemaCost.planta.mx, jPanel1.getHeight() / problemaCost.planta.my);
+        double f = Math.min(jPanel1.getWidth() / problema.planta.mx, jPanel1.getHeight() / problema.planta.my);
         Graphics g = jPanel1.getGraphics();
-        DesenhaHeatMap(problemaCost.planta.celulas, problemaCost.planta.pas, problemaCost.planta.d, f, g);
-        DesenhaParedes(problemaCost.planta.paredes, problemaCost.planta.d, f, g);
+        DesenhaHeatMap(problema.planta.celulas, problema.planta.pas, problema.planta.d, f, g);
+        DesenhaParedes(problema.planta.paredes, problema.planta.d, f, g);
 
     }//GEN-LAST:event_jbCalcularActionPerformed
 

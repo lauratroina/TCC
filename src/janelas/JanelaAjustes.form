@@ -284,20 +284,29 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtIndividuosSelecionados">
           <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtIndividuosSelecionadosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtProbabilidadeMutacao">
           <Properties>
+            <Property name="text" type="java.lang.String" value="0.01"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtProbabilidadeMutacaoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtProbabilidadeCrossover">
           <Properties>
+            <Property name="text" type="java.lang.String" value="0.9"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
@@ -305,6 +314,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtNumeroGeracoes">
           <Properties>
+            <Property name="text" type="java.lang.String" value="50"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
@@ -312,6 +322,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtNumeroIndividuos">
           <Properties>
+            <Property name="text" type="java.lang.String" value="25"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
@@ -322,8 +333,12 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="jtElitismo">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Permitir elitismo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtElitismoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jtMetodoCalculo">
           <Properties>
@@ -374,15 +389,24 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtTaxaDesejada">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="24"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtTaxaDesejadaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtTaxaAceitavel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtTaxaAceitavelActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Hill-Climbing"/>
+            <Property name="text" type="java.lang.String" value="Passo Hill-Climbing"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[275, 17]"/>
             </Property>
@@ -397,6 +421,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtHillClimbing">
           <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 25]"/>
             </Property>
