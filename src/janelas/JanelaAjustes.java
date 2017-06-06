@@ -4,6 +4,8 @@ import calculo.Cost231;
 import calculo.FuncaoObjetivo;
 import estruturas.Parametros;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class JanelaAjustes extends javax.swing.JFrame {
 
@@ -21,33 +23,33 @@ public class JanelaAjustes extends javax.swing.JFrame {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabelIndividusoSelecionados = new javax.swing.JLabel();
+        jLabelNumeroIndividuos = new javax.swing.JLabel();
+        jLabelNumeroGeracoes = new javax.swing.JLabel();
+        jLabelProbabilidadeCrossover = new javax.swing.JLabel();
+        jLabelProbabilidadeMutacao = new javax.swing.JLabel();
+        jLabelElitismo = new javax.swing.JLabel();
         jbSalvar = new javax.swing.JButton();
-        jtIndividuosSelecionados = new javax.swing.JTextField();
-        jtProbabilidadeMutacao = new javax.swing.JTextField();
-        jtProbabilidadeCrossover = new javax.swing.JTextField();
-        jtNumeroGeracoes = new javax.swing.JTextField();
-        jtNumeroIndividuos = new javax.swing.JTextField();
         jtElitismo = new javax.swing.JCheckBox();
         jtMetodoCalculo = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelParametrosDoAg = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel10 = new javax.swing.JLabel();
+        jLabelParametrosProblema = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jtTaxaDesejada = new javax.swing.JTextField();
-        jtTaxaAceitavel = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
+        jLabelTaxaDesejada = new javax.swing.JLabel();
+        jLabelTaxaAceitavel = new javax.swing.JLabel();
+        jLabelPassoHillClimbing = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
-        jtHillClimbing = new javax.swing.JTextField();
+        jLabelMetodoCalculo = new javax.swing.JLabel();
+        jTaxaDesejada = new javax.swing.JComboBox<>();
+        jTaxaAceitavel = new javax.swing.JComboBox<>();
+        jNumeroIndividuos = new javax.swing.JSpinner();
+        jNumeroGeracoes = new javax.swing.JSpinner();
+        jProbabilidadeCrossover = new javax.swing.JSpinner();
+        jProbabilidadeMutacao = new javax.swing.JSpinner();
+        jNumeroIndividuosSelecionados = new javax.swing.JSpinner();
+        jPassoHillClimbing = new javax.swing.JSpinner();
 
         jInternalFrame1.setVisible(true);
 
@@ -69,17 +71,17 @@ public class JanelaAjustes extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 500));
 
-        jLabel1.setText("Número de Indivíduos Selecionados");
+        jLabelIndividusoSelecionados.setText("Número de Indivíduos Selecionados");
 
-        jLabel3.setText("Número de indivíduos");
+        jLabelNumeroIndividuos.setText("Número de indivíduos");
 
-        jLabel4.setText("Número de gerações");
+        jLabelNumeroGeracoes.setText("Número de gerações");
 
-        jLabel5.setText("Probabilidade de Crossover");
+        jLabelProbabilidadeCrossover.setText("Probabilidade de Crossover");
 
-        jLabel6.setText("Probabilidade de Mutação");
+        jLabelProbabilidadeMutacao.setText("Probabilidade de Mutação");
 
-        jLabel7.setText("Elitismo");
+        jLabelElitismo.setText("Elitismo");
 
         jbSalvar.setText("Salvar");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -87,32 +89,6 @@ public class JanelaAjustes extends javax.swing.JFrame {
                 jbSalvarActionPerformed(evt);
             }
         });
-
-        jtIndividuosSelecionados.setText("2");
-        jtIndividuosSelecionados.setMinimumSize(new java.awt.Dimension(10, 25));
-        jtIndividuosSelecionados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtIndividuosSelecionadosActionPerformed(evt);
-            }
-        });
-
-        jtProbabilidadeMutacao.setText("0.01");
-        jtProbabilidadeMutacao.setMinimumSize(new java.awt.Dimension(10, 25));
-        jtProbabilidadeMutacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtProbabilidadeMutacaoActionPerformed(evt);
-            }
-        });
-
-        jtProbabilidadeCrossover.setText("0.9");
-        jtProbabilidadeCrossover.setMinimumSize(new java.awt.Dimension(10, 25));
-
-        jtNumeroGeracoes.setText("50");
-        jtNumeroGeracoes.setMinimumSize(new java.awt.Dimension(10, 25));
-
-        jtNumeroIndividuos.setText("25");
-        jtNumeroIndividuos.setMinimumSize(new java.awt.Dimension(10, 25));
-        jtNumeroIndividuos.setPreferredSize(new java.awt.Dimension(10, 25));
 
         jtElitismo.setSelected(true);
         jtElitismo.setText("Permitir elitismo");
@@ -129,42 +105,47 @@ public class JanelaAjustes extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Parâmetros do Algoritmo Genético");
+        jLabelParametrosDoAg.setText("Parâmetros do Algoritmo Genético");
 
-        jLabel10.setText("Parâmetros do Problema");
+        jLabelParametrosProblema.setText("Parâmetros do Problema");
 
-        jLabel11.setText("Menor taxa de transferência desejada");
-        jLabel11.setPreferredSize(new java.awt.Dimension(275, 17));
+        jLabelTaxaDesejada.setText("Menor taxa de transferência desejada");
+        jLabelTaxaDesejada.setPreferredSize(new java.awt.Dimension(275, 17));
 
-        jLabel12.setText("Menor taxa de transferência aceitável");
-        jLabel12.setPreferredSize(new java.awt.Dimension(275, 17));
+        jLabelTaxaAceitavel.setText("Menor taxa de transferência aceitável");
+        jLabelTaxaAceitavel.setPreferredSize(new java.awt.Dimension(275, 17));
 
-        jtTaxaDesejada.setText("24");
-        jtTaxaDesejada.addActionListener(new java.awt.event.ActionListener() {
+        jLabelPassoHillClimbing.setText("Passo Hill-Climbing");
+        jLabelPassoHillClimbing.setPreferredSize(new java.awt.Dimension(275, 17));
+
+        jLabelMetodoCalculo.setText("Método para calcular a perda");
+
+        jTaxaDesejada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "6", "9", "12", "18", "24", "36", "48", "54" }));
+        jTaxaDesejada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtTaxaDesejadaActionPerformed(evt);
+                jTaxaDesejadaActionPerformed(evt);
             }
         });
 
-        jtTaxaAceitavel.setText("0");
-        jtTaxaAceitavel.addActionListener(new java.awt.event.ActionListener() {
+        jTaxaAceitavel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "6", "9", "12", "18", "24", "36", "48", "54" }));
+        jTaxaAceitavel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtTaxaAceitavelActionPerformed(evt);
+                jTaxaAceitavelActionPerformed(evt);
             }
         });
 
-        jLabel13.setText("Passo Hill-Climbing");
-        jLabel13.setPreferredSize(new java.awt.Dimension(275, 17));
+        jNumeroIndividuos.setModel(new javax.swing.SpinnerNumberModel(30, 0, 300, 1));
+        jNumeroIndividuos.setToolTipText("");
 
-        jLabel8.setText("Método para calcular a perda");
+        jNumeroGeracoes.setModel(new javax.swing.SpinnerNumberModel(50, 0, 300, 1));
 
-        jtHillClimbing.setText("1");
-        jtHillClimbing.setMinimumSize(new java.awt.Dimension(10, 25));
-        jtHillClimbing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtHillClimbingActionPerformed(evt);
-            }
-        });
+        jProbabilidadeCrossover.setModel(new javax.swing.SpinnerNumberModel(0.8999999761581421d, 0.0d, 1.0d, 0.10000000149011612d));
+
+        jProbabilidadeMutacao.setModel(new javax.swing.SpinnerNumberModel(0.009999999776482582d, 0.0d, 1.0d, 0.009999999776482582d));
+
+        jNumeroIndividuosSelecionados.setModel(new javax.swing.SpinnerNumberModel(2, 0, 150, 1));
+
+        jPassoHillClimbing.setModel(new javax.swing.SpinnerNumberModel(1.0d, 0.0d, 5.0d, 0.009999999776482582d));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,50 +161,50 @@ public class JanelaAjustes extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(224, 224, 224)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabelParametrosProblema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabelProbabilidadeCrossover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabelElitismo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabelNumeroIndividuos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(84, 84, 84))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelNumeroGeracoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelProbabilidadeMutacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelIndividusoSelecionados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelTaxaAceitavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(149, 149, 149))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelTaxaDesejada, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(96, 96, 96)))
+                                        .addComponent(jLabelMetodoCalculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(96, 96, 96))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabelPassoHillClimbing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(20, 20, 20)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtMetodoCalculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtProbabilidadeMutacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jtProbabilidadeCrossover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtNumeroGeracoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtNumeroIndividuos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jtElitismo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtIndividuosSelecionados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtTaxaDesejada, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jtTaxaAceitavel)
-                                    .addComponent(jtHillClimbing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jTaxaDesejada, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTaxaAceitavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jNumeroIndividuos, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jNumeroGeracoes)
+                                    .addComponent(jProbabilidadeCrossover, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jProbabilidadeMutacao, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jNumeroIndividuosSelecionados, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPassoHillClimbing, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(23, 23, 23)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -231,7 +212,7 @@ public class JanelaAjustes extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(214, 214, 214)
-                .addComponent(jLabel2)
+                .addComponent(jLabelParametrosDoAg)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -240,63 +221,61 @@ public class JanelaAjustes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabelParametrosDoAg)
+                .addGap(13, 13, 13)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelElitismo)
+                    .addComponent(jtElitismo))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumeroIndividuos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jNumeroIndividuos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumeroGeracoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jNumeroGeracoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jProbabilidadeCrossover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelProbabilidadeCrossover, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jtElitismo))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtNumeroIndividuos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtNumeroGeracoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jtProbabilidadeCrossover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtProbabilidadeMutacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtIndividuosSelecionados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelIndividusoSelecionados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jNumeroIndividuosSelecionados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelParametrosProblema, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 16, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtTaxaDesejada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTaxaDesejada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelTaxaDesejada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtTaxaAceitavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabelTaxaAceitavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTaxaAceitavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtMetodoCalculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtMetodoCalculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelMetodoCalculo, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelPassoHillClimbing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassoHillClimbing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jtHillClimbing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jbSalvar)
-                .addGap(14, 14, 14))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jProbabilidadeMutacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelProbabilidadeMutacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jbSalvar))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,31 +297,34 @@ public class JanelaAjustes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jtHillClimbingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtHillClimbingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtHillClimbingActionPerformed
-
-    private void jtTaxaAceitavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtTaxaAceitavelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtTaxaAceitavelActionPerformed
+    
+    public void ValidaNumero(JTextField campo) { 
+	long valor; 
+	if (campo.getText().length() != 0){ 
+		try { 
+			valor = Long.parseLong(campo.getText()); 
+		}catch(NumberFormatException ex){ 
+			JOptionPane.showMessageDialog(null, "Esse Campo só aceita números" ,"Informação",JOptionPane.INFORMATION_MESSAGE); 
+			campo.grabFocus(); 
+		} 
+	} 
+} 
 
     private void jtMetodoCalculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMetodoCalculoActionPerformed
 
     }//GEN-LAST:event_jtMetodoCalculoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        int numeroIndividuos = Integer.parseInt(this.jtNumeroIndividuos.getText());
-        int numeroGeracoes = Integer.parseInt(this.jtNumeroGeracoes.getText());
-        double probabilidadeMutacao = Double.parseDouble(this.jtProbabilidadeMutacao.getText());
-        double probabilidadeCrossover = Double.parseDouble(this.jtProbabilidadeCrossover.getText());
-        int individuosSelecionados = Integer.parseInt(this.jtIndividuosSelecionados.getText());
+        int numeroIndividuos = (Integer)this.jNumeroIndividuos.getValue();
+        int numeroGeracoes = (Integer) this.jNumeroGeracoes. getValue();
+        double probabilidadeMutacao = (Double) this.jProbabilidadeMutacao.getValue();
+        double probabilidadeCrossover = (Double) this.jProbabilidadeCrossover.getValue();
+        int individuosSelecionados = (Integer) this.jNumeroIndividuosSelecionados.getValue();
         boolean elitismo = this.jtElitismo.isSelected();
         int metodoCalculo = this.jtMetodoCalculo.getSelectedIndex();
-        int taxaAceitavel = Integer.parseInt(this.jtTaxaAceitavel.getText());
-        int taxaDesejada = Integer.parseInt(this.jtTaxaDesejada.getText());
-        double hillClimbing = jtHillClimbing.getText().isEmpty() ?
-        0 : Double.parseDouble(this.jtHillClimbing.getText());
+        int taxaAceitavel = Integer.parseInt(this.jTaxaAceitavel.getSelectedItem().toString());
+        int taxaDesejada = Integer.parseInt(this.jTaxaDesejada.getSelectedItem().toString());
+        double hillClimbing = (Double) this.jPassoHillClimbing.getValue();
 
         parametros.setParametros(numeroIndividuos, numeroGeracoes, probabilidadeCrossover,
             probabilidadeMutacao, individuosSelecionados, elitismo, metodoCalculo,
@@ -357,48 +339,44 @@ public class JanelaAjustes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtElitismoActionPerformed
 
-    private void jtProbabilidadeMutacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtProbabilidadeMutacaoActionPerformed
+    private void jTaxaDesejadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTaxaDesejadaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtProbabilidadeMutacaoActionPerformed
+    }//GEN-LAST:event_jTaxaDesejadaActionPerformed
 
-    private void jtIndividuosSelecionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIndividuosSelecionadosActionPerformed
+    private void jTaxaAceitavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTaxaAceitavelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtIndividuosSelecionadosActionPerformed
-
-    private void jtTaxaDesejadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtTaxaDesejadaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtTaxaDesejadaActionPerformed
+    }//GEN-LAST:event_jTaxaAceitavelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelElitismo;
+    private javax.swing.JLabel jLabelIndividusoSelecionados;
+    private javax.swing.JLabel jLabelMetodoCalculo;
+    private javax.swing.JLabel jLabelNumeroGeracoes;
+    private javax.swing.JLabel jLabelNumeroIndividuos;
+    private javax.swing.JLabel jLabelParametrosDoAg;
+    private javax.swing.JLabel jLabelParametrosProblema;
+    private javax.swing.JLabel jLabelPassoHillClimbing;
+    private javax.swing.JLabel jLabelProbabilidadeCrossover;
+    private javax.swing.JLabel jLabelProbabilidadeMutacao;
+    private javax.swing.JLabel jLabelTaxaAceitavel;
+    private javax.swing.JLabel jLabelTaxaDesejada;
+    private javax.swing.JSpinner jNumeroGeracoes;
+    private javax.swing.JSpinner jNumeroIndividuos;
+    private javax.swing.JSpinner jNumeroIndividuosSelecionados;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jPassoHillClimbing;
+    private javax.swing.JSpinner jProbabilidadeCrossover;
+    private javax.swing.JSpinner jProbabilidadeMutacao;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JComboBox<String> jTaxaAceitavel;
+    private javax.swing.JComboBox<String> jTaxaDesejada;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JCheckBox jtElitismo;
-    private javax.swing.JTextField jtHillClimbing;
-    private javax.swing.JTextField jtIndividuosSelecionados;
     private javax.swing.JComboBox<String> jtMetodoCalculo;
-    private javax.swing.JTextField jtNumeroGeracoes;
-    private javax.swing.JTextField jtNumeroIndividuos;
-    private javax.swing.JTextField jtProbabilidadeCrossover;
-    private javax.swing.JTextField jtProbabilidadeMutacao;
-    private javax.swing.JTextField jtTaxaAceitavel;
-    private javax.swing.JTextField jtTaxaDesejada;
     // End of variables declaration//GEN-END:variables
 }

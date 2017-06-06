@@ -1,12 +1,15 @@
 package calculo;
 
-import estruturas.*;
+import estruturas.Celula;
+import estruturas.Parede;
+import estruturas.PontoAcesso;
 import java.util.ArrayList;
 
-public class Cost231 extends Problema {
+public class ITU extends Problema {
 
     @Override
     public double avalia(double individuo[]) {
+        
         for (Celula c : this.planta.celulas) {
             c.setPotencia(-1000);
         }
@@ -16,15 +19,18 @@ public class Cost231 extends Problema {
             this.planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
         }
 
-        double db = 0;
-        int celulasTavaDesejada = 0, celulasTaxaAceitavel = 0;
+        double db = 0, f=1;
+        int celulasTaxaDesejada = 0, celulasTaxaAceitavel = 0, contador=0;
         for (Celula c : this.planta.celulas) {
             for (PontoAcesso pa : this.planta.pas) {
-                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2)));
-
+                db = 20*Math.log10(f) + (30 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2))));
+                
                 for (Parede p : this.planta.paredes) {
-                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.d / 2, c.getY() + this.planta.d / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()) * p.getPerda();
-                }
+                   contador += (interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.d / 2, c.getY() + this.planta.d / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()));
+                } 
+                
+                //coeficiente de perda 
+                db -= (15+(contador-1)-28);  
 
                 if (db > c.getPotencia()) {
                     c.setPotencia(db);
@@ -35,10 +41,11 @@ public class Cost231 extends Problema {
                 celulasTaxaAceitavel++;
             }
             if (c.getPotencia() > this.taxaDesejada) {
-                celulasTavaDesejada++;
+                celulasTaxaDesejada++;
             }
         }
-        double qualidade = (100.0 * (celulasTavaDesejada) / this.planta.celulas.size()) - 1000.0 * (celulasTaxaAceitavel / this.planta.celulas.size());
+        double qualidade = (100.0 * (celulasTaxaDesejada) / this.planta.celulas.size()) 
+                                - 1000.0 * (celulasTaxaAceitavel / this.planta.celulas.size());
         return qualidade;
     }
 
@@ -52,4 +59,5 @@ public class Cost231 extends Problema {
         double tb = ((y1 - y2) * (x1 - x3) + (x2 - x1) * (y1 - y3)) / d;
         return (((ta >= 0) && (ta <= 1)) && ((tb >= 0) && (tb <= 1))) ? 1 : 0;
     }
+
 }

@@ -12,6 +12,8 @@ import java.awt.Font;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -24,7 +26,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public JanelaPrincipal(Parametros parametros) {
 
         this.parametros = parametros;
-        this.setIconImage(new ImageIcon(getClass().getResource("R2D2-icon.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("download.png")).getImage());
         initComponents();
         jbExportar.setEnabled(false);
         jbCalcular.setEnabled(false);
@@ -44,7 +46,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jbCalcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TCC - Laura");
         setResizable(false);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -217,7 +218,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
 
-        parametros.setDiscretizacao(Double.parseDouble(JOptionPane.showInputDialog("Entre com discretização da planta", "1")));
+        JSpinner spinner = new JSpinner(new SpinnerNumberModel(0.1, 0.0, 5.0, 0.1));
+        JOptionPane.showMessageDialog(null, spinner, "Discretização da planta", 1);
+        parametros.setDiscretizacao((Double) spinner.getValue());
         File arquivo = null;
         planta = new Planta();
         JFileChooser seletorArquivo = new JFileChooser();
@@ -242,8 +245,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         algoritmoGenetico = new AlgoritmoGenetico();
 
-        //IMPLMENTAR ITUUUUUUUUUUUUUUUU
-        problema = parametros.getMetodoCalculo() == 0 ? new Cost231() : new Cost231();
+        problema = parametros.getMetodoCalculo() == 0 ? new ITU(): new Cost231();
         problema.planta = planta;
 
         HashMap<Integer, Frequencia> mapa = new HashMap<Integer, Frequencia>();
@@ -257,8 +259,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         mapa.put(6, new Frequencia(-89, -84, 6, new Color(0, 0, 255)));
         mapa.put(0, new Frequencia(-1000, -89, 0, new Color(0, 0, 128)));
 
-        problema.cmaior = mapa.get(parametros.getTaxaDesejada()).getLimiteInfeior();
-        problema.cmenor = mapa.get(parametros.getTaxaAceitavel()).getLimiteSuperior();
+        problema.taxaDesejada = mapa.get(parametros.getTaxaDesejada()).getLimiteInfeior();
+        problema.taxaAceitavel = mapa.get(parametros.getTaxaAceitavel()).getLimiteSuperior();
 
         
         HillClimbing buscaLocal = new HillClimbing();
