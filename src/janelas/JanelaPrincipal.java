@@ -245,7 +245,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         algoritmoGenetico = new AlgoritmoGenetico();
 
-        problema = parametros.getMetodoCalculo() == 0 ? new ITU(): new Cost231();
+        problema = parametros.getMetodoCalculo() == 0 ? new ITU() : new Cost231();
         problema.planta = planta;
 
         HashMap<Integer, Frequencia> mapa = new HashMap<Integer, Frequencia>();
@@ -262,18 +262,21 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         problema.taxaDesejada = mapa.get(parametros.getTaxaDesejada()).getLimiteInfeior();
         problema.taxaAceitavel = mapa.get(parametros.getTaxaAceitavel()).getLimiteSuperior();
 
-        
         HillClimbing buscaLocal = new HillClimbing();
         buscaLocal.setPasso(parametros.getIntervaloHillClimbing());
 
         double[][] minMax = {{0, problema.planta.mx}, {0, problema.planta.my},
         {0, problema.planta.mx}, {0, problema.planta.my}};
+
         algoritmoGenetico.inicializa(4, parametros.getNumeroIndividuos(),
                 parametros.getNumeroGeracoes(), parametros.getProbabilidadeCrossover(),
                 parametros.getProbabilidadeMutacao(), parametros.getNumeroIndividuosSelecionados(),
                 parametros.getElitismo(), minMax, problema, buscaLocal);
-
+        long inicio = System.currentTimeMillis();
         algoritmoGenetico.executa();
+        long fim = System.currentTimeMillis();
+        System.out.println("Tempo de execução: " + (fim - inicio));
+
         problema.avalia(algoritmoGenetico.getMelhorIndividuo());
 
         problema.planta.pas = new ArrayList<PontoAcesso>();
