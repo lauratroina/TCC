@@ -27,6 +27,10 @@ public class AlgoritmoGenetico {
     public double[] getMelhorIndividuo() {
         return melhorIndividuo;
     }
+    
+    public double getMelhorFitness(){
+        return melhorFitness;
+    }
 
     public void inicializa(int numeroGenes, int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, double[][] valorMinMax, Problema problema, BuscaLocal buscaLocal) {
         this.numeroGenes = numeroGenes;

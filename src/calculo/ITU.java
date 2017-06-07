@@ -19,18 +19,22 @@ public class ITU extends Problema {
             this.planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
         }
 
-        double db = 0, f=1;
-        int celulasTaxaDesejada = 0, celulasTaxaAceitavel = 0, contador=0;
+        double db;
+        int celulasTaxaDesejada = 0, celulasTaxaAceitavel = 0;
         for (Celula c : this.planta.celulas) {
             for (PontoAcesso pa : this.planta.pas) {
-                db = 20*Math.log10(f) + (30 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2))));
-                
+
+                int contador = 0;
                 for (Parede p : this.planta.paredes) {
                    contador += (interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.d / 2, c.getY() + this.planta.d / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()));
                 } 
                 
                 //coeficiente de perda 
-                db -= (15+(contador-1)-28);  
+                db = 20;
+                db -= 20*Math.log10(2400);
+                db -= (30 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2))));
+                db -= 15+(contador-1);
+                db -= -28;
 
                 if (db > c.getPotencia()) {
                     c.setPotencia(db);

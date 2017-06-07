@@ -121,6 +121,7 @@ public class JanelaAjustes extends javax.swing.JFrame {
         jLabelMetodoCalculo.setText("Método para calcular a perda");
 
         jTaxaDesejada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "6", "9", "12", "18", "24", "36", "48", "54" }));
+        jTaxaDesejada.setSelectedIndex(5);
         jTaxaDesejada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTaxaDesejadaActionPerformed(evt);
