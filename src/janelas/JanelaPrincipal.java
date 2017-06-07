@@ -19,7 +19,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private Parametros parametros;
     private Problema problema;
-    private AlgoritmoGenetico algoritmoGenetico;
     private Planta planta;
     private ArrayList<Frequencia> frequencias;
 
@@ -243,8 +242,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jbCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalcularActionPerformed
 
-        algoritmoGenetico = new AlgoritmoGenetico();
-
         problema = parametros.getMetodoCalculo() == 0 ? new ITU() : new Cost231();
         problema.planta = planta;
 
@@ -262,36 +259,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         problema.taxaDesejada = mapa.get(parametros.getTaxaDesejada()).getLimiteInfeior();
         problema.taxaAceitavel = mapa.get(parametros.getTaxaAceitavel()).getLimiteSuperior();
 
-        HillClimbing buscaLocal = new HillClimbing();
-        buscaLocal.setPasso(parametros.getIntervaloHillClimbing());
-
-        //double[][] minMax = {{0, problema.planta.mx}, {0, problema.planta.my},
-        //{0, problema.planta.mx}, {0, problema.planta.my}};]
-        int quantidadeAPs = 1;
-        do {
-            double minMax[][] = new double[quantidadeAPs * 2][2];
-            for (int i = 0; i < quantidadeAPs; i++) {
-                minMax[i * 2][0] = 0;
-                minMax[i * 2][1] = problema.planta.mx;
-                minMax[(i * 2) + 1][0] = 0;
-                minMax[(i * 2) + 1][1] = problema.planta.my;
-            }
-
-            algoritmoGenetico.inicializa(quantidadeAPs * 2, parametros.getNumeroIndividuos(),
-                    parametros.getNumeroGeracoes(), parametros.getProbabilidadeCrossover(),
-                    parametros.getProbabilidadeMutacao(), parametros.getNumeroIndividuosSelecionados(),
-                    parametros.getElitismo(), minMax, problema, buscaLocal);
-            algoritmoGenetico.executa();
-            System.out.printf("Melhor solução com %d = %.2f\n", quantidadeAPs, algoritmoGenetico.getMelhorFitness());
-            quantidadeAPs++;
-
-        } while (algoritmoGenetico.getMelhorFitness() < 95);
-
-        problema.avalia(algoritmoGenetico.getMelhorIndividuo());
+        AlgoritmoGeneticoIterativo iterativo = new AlgoritmoGeneticoIterativo(parametros, problema);
+        iterativo.Executa();
+ 
+        double[] melhorResultado = iterativo.getResultado();
+        problema.avalia(melhorResultado);
 
         problema.planta.pas = new ArrayList<PontoAcesso>();
-        for (int i = 0; i < (algoritmoGenetico.getMelhorIndividuo().length / 2); i++) {
-            problema.planta.pas.add(new PontoAcesso(algoritmoGenetico.getMelhorIndividuo()[i * 2], algoritmoGenetico.getMelhorIndividuo()[i * 2 + 1]));
+        for (int i = 0; i < (iterativo.getResultado().length / 2); i++) {
+            problema.planta.pas.add(new PontoAcesso(melhorResultado[i * 2], melhorResultado[i * 2 + 1]));
         }
         double f = Math.min(jPanel1.getWidth() / problema.planta.mx, jPanel1.getHeight() / problema.planta.my);
         Graphics g = jPanel1.getGraphics();
