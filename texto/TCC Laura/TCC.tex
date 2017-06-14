@@ -24,7 +24,7 @@
 
 \advisor[Prof. ]{Betito}{Rafael} 
 
-\date{Dezembro}{2016} 
+\date{Julho}{2017} 
 
 \location{Rio Grande}{RS} 
 
@@ -35,17 +35,17 @@
 	Coordenador do curso: Prof. Rafael Betito\\ 
 } 
 
-\keyword{rede sem fio, otimização de cobertura, heurística} 
+\keyword{rede sem fio, otimização de cobertura, heuristica, hillclimbing, algoritmo genetico} 
 
 \begin{document} 
 
 \maketitle 
 
 \begin{folhadeaprovacao} 
-	Monografia sob o título \textit{"Alocação espacial de aparelhos de distribuição de redes IEEE 802.11 em ambientes internos 2D"}, defendida por Laura Troina Nunes e aprovada em XX de XXXX de XXXX, em Rio Grande, estado do Rio Grande do Sul, pela banca examinadora constituída pelos professores: 
+	Monografia sob o título \textit{"Alocação espacial de aparelhos de distribuição de redes IEEE 802.11 em ambientes internos 2D"}, defendida por Laura Troina Nunes e aprovada em XX de julho de 2017, em Rio Grande, estado do Rio Grande do Sul, pela banca examinadora constituída pelos professores: 
 \assinatura{Prof. Rafael Betito\\Orientador} 
-\assinatura{Prof. NOME SOBRENOME\\INSTITUIÇÃO}
-\assinatura{Prof. NOME SOBRENOME\\INSTITUIÇÃ0}  
+\assinatura{Prof. Mscº Luciano Vargas\\Instituto Federal de Educação Ciência e Tecnologia do Rio Grande do Sul}
+\assinatura{Prof. Drª Raquel Barbosa\\Instituto Federal de Educação Ciência e Tecnologia do Rio Grande do Sul}  
 \end{folhadeaprovacao} 
 
 \clearpage 
@@ -56,7 +56,12 @@
 		"Do or do not. There is no try."\\} 
 	--- \textsc{Mestre Yoda} 
 \end{flushright} 
-
+\begin{flushright} 
+	\mbox{}\vfill 
+	{\sffamily\itshape 
+		"Stay hungry. Stay foolish"\\} 
+	--- \textsc{Steve Jobs} 
+\end{flushright} 
 \chapter*{Agradecimentos} 
 
 AGRADECIMENTOS
@@ -307,7 +312,7 @@ Exitem heurísticas que iterativamente trabalham com uma única solução. \text
 
 \subsubsection{Hill Climbing}
 
-É uma técnica relacionada com um gradiente ascendente. Não requer conhecimento sobre o tamanho, nem sobre a direção desse gradiente. É necessário testar iterativamente novas soluções candidatas na vizinhança da solução atual e substituir a atual pela candidata quando a solução candidata é melhor. Isto permite uma subida até o ótimo local. O algoritmo apresenta baixo custo computacional, por é pouco eficiente em relação à encontrar uma melhora para a solução. \cite{luke2009metaheuristics} %conferido
+É uma técnica relacionada com um gradiente ascendente. Não requer conhecimento sobre o tamanho, nem sobre a direção desse gradiente. É necessário testar iterativamente novas soluções candidatas na vizinhança da solução atual e substituir a atual pela candidata quando a solução candidata é melhor. Isto permite uma subida até o ótimo local. O algoritmo apresenta baixo custo computacional, porém é pouco eficiente em relação à encontrar uma melhora para a solução. \cite{luke2009metaheuristics} %conferido
 
 \subsubsection{Algoritmos Genéticos}
 
@@ -330,9 +335,6 @@ ate que o criterio de satisfacao seja satisfeito
 
 O algoritmo \ref{algGeneticoCan} começa inicializando todas as variavéis que formam as soluções candidatas. A avaliação da qualidade de uma solução candidata é feita com base no valor em suas variáveis. É com base na evolução da qualidade do indivíduos que se resolve o problema. O cálculo da qualidade também engloba as restrições às quais o problema está sujeito. O processo de escolha de pai e mãe efetua a seleção de soluções candidatas para gerar as soluções da próxima geração. Ajustada corretamente, é esta operação que conduz a população de soluções candidatas para regiões mais promissoras do espaço de busca. Roleta e torneio, são os tipos mais usados de seleção. O processo de cruzamento envolve gerar dois filhos a partir do pai e da mãe selecionados anteriormente. Neste processo, genes dos pais são misturados de modo que cada filho herde características de ambos. Cruzamento em um ponto, cruzamento em dois pontos e cruzamento uniforme são alguns tipos de cruzamento. O próximo passo é a mutação. Significa alterar probabilisticamente o valor de alguns dos genes que compõe o indivíduo. Por fim, os indivíduos da nova geração se tornam a geração atual e o processo se repete até que o critério de satisfação seja satisfeito. Alguns critérios de satisfação utilizados são número máximo de iterações e convergência da população. \cite{luke2009metaheuristics} \cite{mitchell1998introduction} %conferido
 
-%\section{Paralelismo}
-
-%PARALELISMO 
 
 %\subsection{Objetivo}
 

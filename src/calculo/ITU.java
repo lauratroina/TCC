@@ -7,9 +7,17 @@ import java.util.ArrayList;
 
 public class ITU extends Problema {
 
+    private int tipoAmbiente;
+    private int frequenciaOperacao;
+
+    public ITU(int tipoAmbiente, int frequenciaOperacao) {
+        this.tipoAmbiente = tipoAmbiente;
+        this.frequenciaOperacao = frequenciaOperacao;
+    }
+
     @Override
     public double avalia(double individuo[]) {
-        
+
         for (Celula c : this.planta.celulas) {
             c.setPotencia(-1000);
         }
@@ -19,21 +27,36 @@ public class ITU extends Problema {
             this.planta.pas.add(new PontoAcesso(individuo[i * 2], individuo[(i * 2) + 1]));
         }
 
-        double db;
+        double db, n;
         int celulasTaxaDesejada = 0, celulasTaxaAceitavel = 0;
         for (Celula c : this.planta.celulas) {
             for (PontoAcesso pa : this.planta.pas) {
 
                 int contador = 0;
                 for (Parede p : this.planta.paredes) {
-                   contador += (interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.d / 2, c.getY() + this.planta.d / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()));
-                } 
-                
-                //coeficiente de perda 
-                db = 20;
-                db -= 20*Math.log10(2400);
-                db -= (30 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.d / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.d / 2), 2))));
-                db -= 15+(contador-1);
+                    contador += (interseccao(pa.getX(), pa.getY(), c.getX() + this.planta.discretizacao / 2, c.getY() + this.planta.discretizacao / 2, p.getReta().getX1(), p.getReta().getY1(), p.getReta().getX2(), p.getReta().getY2()));
+                }
+
+                if (tipoAmbiente == 0) {
+                    n = 28;
+                } else if (tipoAmbiente == 1) {
+                    n = 30;
+                } else {
+                    n = 22;
+                }
+
+                db = this.potenciaTransmitida;
+                db -= 20 * Math.log10(frequenciaOperacao);
+                db -= (n * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + this.planta.discretizacao / 2), 2) + Math.pow(pa.getY() - (c.getY() + this.planta.discretizacao / 2), 2))));
+
+                if (tipoAmbiente == 0) {
+                    db -= 4 * contador;
+                } else if (tipoAmbiente == 1) {
+                    db -= 15 + (contador - 1);
+                } else {
+                    db -= 6 + 3 * (contador - 1);
+                }
+
                 db -= -28;
 
                 if (db > c.getPotencia()) {
@@ -48,8 +71,8 @@ public class ITU extends Problema {
                 celulasTaxaDesejada++;
             }
         }
-        double qualidade = (100.0 * (celulasTaxaDesejada) / this.planta.celulas.size()) 
-                                - 1000.0 * (celulasTaxaAceitavel / this.planta.celulas.size());
+        double qualidade = (100.0 * (celulasTaxaDesejada) / this.planta.celulas.size())
+                - 1000.0 * (celulasTaxaAceitavel / this.planta.celulas.size());
         return qualidade;
     }
 

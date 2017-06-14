@@ -28,16 +28,14 @@ public class AlgoritmoGeneticoIterativo {
         buscaLocal = new HillClimbing();
         buscaLocal.setPasso(parametros.getIntervaloHillClimbing());
 
-        //double[][] minMax = {{0, problema.planta.mx}, {0, problema.planta.my},
-        //{0, problema.planta.mx}, {0, problema.planta.my}};]
         int quantidadeAPs = 1;
         do {
             double minMax[][] = new double[quantidadeAPs * 2][2];
             for (int i = 0; i < quantidadeAPs; i++) {
                 minMax[i * 2][0] = 0;
-                minMax[i * 2][1] = problema.planta.mx;
+                minMax[i * 2][1] = problema.planta.maximoX;
                 minMax[(i * 2) + 1][0] = 0;
-                minMax[(i * 2) + 1][1] = problema.planta.my;
+                minMax[(i * 2) + 1][1] = problema.planta.maximoY;
             }
 
             algoritmoGenetico.inicializa(quantidadeAPs * 2, parametros.getNumeroIndividuos(),
@@ -48,7 +46,7 @@ public class AlgoritmoGeneticoIterativo {
             System.out.printf("Melhor solução com %d = %.2f\n", quantidadeAPs, algoritmoGenetico.getMelhorFitness());
             quantidadeAPs++;
 
-        } while (algoritmoGenetico.getMelhorFitness() < 95);
+        } while (algoritmoGenetico.getMelhorFitness() < parametros.getCoberturaDesejada());
 
     }
     

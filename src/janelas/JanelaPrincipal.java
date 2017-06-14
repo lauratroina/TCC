@@ -192,18 +192,25 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             g.setColor(freq.getCor());
             g.fillRect(
                     (int) (i * (jPanel1.getWidth() / frequencias.size())),
-                    (int) (15 * f + 10),
+                    (int) (planta.maximoY * f + 10),
                     (int) (jPanel1.getWidth() / frequencias.size()),
                     30);
             g.setColor(Color.black);
             g.drawString(
                     String.valueOf(freq.getTaxa()),
                     (int) (i * (jPanel1.getWidth() / frequencias.size()) + (jPanel1.getWidth() / frequencias.size()) / 2) - 10,
-                    (int) (15 * f + 20 + 10)
+                    (int) (planta.maximoY * f + 20 + 10)
             );
 
             i++;
         }
+        
+        g.setColor(Color.black);
+         g.fillRect(
+                    0, (int) (planta.maximoY * f + 10 + 30 + 10),
+                    jPanel1.getWidth(),
+                    30);
+           
 
     }
     private void jbConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigActionPerformed
@@ -233,7 +240,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         }
 
-        double fatorDeCorrecao = Math.min(jPanel1.getWidth() / planta.mx, jPanel1.getHeight() / planta.my);
+        double fatorDeCorrecao = Math.min(jPanel1.getWidth() / planta.maximoX, jPanel1.getHeight() / planta.maximoY);
         Graphics g = jPanel1.getGraphics();
         DesenhaParedes(planta.paredes, parametros.getDiscretizacao(), fatorDeCorrecao, g);
 
@@ -242,7 +249,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jbCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalcularActionPerformed
 
-        problema = parametros.getMetodoCalculo() == 0 ? new ITU() : new Cost231();
+        problema = parametros.getMetodoCalculo() == 0 ? 
+                new ITU(parametros.getTipoAmbienteITU(), parametros.getFrequenciaOperacaoITU()) : 
+                new Cost231();
+        
+        problema.potenciaTransmitida = parametros.getPotenciaTransmitida();
         problema.planta = planta;
 
         HashMap<Integer, Frequencia> mapa = new HashMap<Integer, Frequencia>();
@@ -264,15 +275,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
  
         double[] melhorResultado = iterativo.getResultado();
         problema.avalia(melhorResultado);
-
         problema.planta.pas = new ArrayList<PontoAcesso>();
         for (int i = 0; i < (iterativo.getResultado().length / 2); i++) {
             problema.planta.pas.add(new PontoAcesso(melhorResultado[i * 2], melhorResultado[i * 2 + 1]));
         }
-        double f = Math.min(jPanel1.getWidth() / problema.planta.mx, jPanel1.getHeight() / problema.planta.my);
+        double f = Math.min(jPanel1.getWidth() / problema.planta.maximoX, jPanel1.getHeight() / problema.planta.maximoY);
         Graphics g = jPanel1.getGraphics();
-        DesenhaHeatMap(problema.planta.celulas, problema.planta.pas, problema.planta.d, f, g);
-        DesenhaParedes(problema.planta.paredes, problema.planta.d, f, g);
+        DesenhaHeatMap(problema.planta.celulas, problema.planta.pas, problema.planta.discretizacao, f, g);
+        DesenhaParedes(problema.planta.paredes, problema.planta.discretizacao, f, g);
 
     }//GEN-LAST:event_jbCalcularActionPerformed
 

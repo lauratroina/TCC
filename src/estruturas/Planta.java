@@ -13,10 +13,10 @@ public class Planta {
     public ArrayList<Parede> paredes;
     public ArrayList<Celula> celulas;
     public ArrayList<PontoAcesso> pas;
-    public double mx, my, d;
+    public double maximoX, maximoY, discretizacao;
 
-    public void Monta(File arquivo, double d) {
-        this.d = d;
+    public void Monta(File arquivo, double discretizacao) {
+        this.discretizacao = discretizacao;
         this.paredes = new ArrayList<Parede>();
         try {
             Document documento = (Document) DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(arquivo);
@@ -31,21 +31,22 @@ public class Planta {
                     double altura = Double.parseDouble(parede.getAttribute("altura"));
                     double largura = Double.parseDouble(parede.getAttribute("largura"));
                     double perda = Double.parseDouble(parede.getAttribute("perda"));
+                    
                     this.paredes.add(new Parede(x, y, largura, altura, perda));
                 }
             }
 
             this.celulas = new ArrayList<Celula>();
 
-            this.mx = 0; // maximo x
-            this.my = 0; // maximo y
+            this.maximoX = 0; // maximo x
+            this.maximoY = 0; // maximo y
 
             for (Parede p : this.paredes) {
-                if (p.getX() + p.getLargura() > mx) {
-                    mx = p.getX() + p.getLargura();
+                if (p.getX() + p.getLargura() > maximoX) {
+                    maximoX = p.getX() + p.getLargura();
                 }
-                if (p.getY() + p.getAltura() > my) {
-                    my = p.getY() + p.getAltura();
+                if (p.getY() + p.getAltura() > maximoY) {
+                    maximoY = p.getY() + p.getAltura();
                 }
                 if (p.getLargura() > p.getAltura()) {
                     p.setReta(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2));
@@ -56,8 +57,8 @@ public class Planta {
             }
 
             // popular celula
-            for (double i = 0; i < mx; i += this.d) {
-                for (double j = 0; j < my; j += this.d) {
+            for (double i = 0; i < maximoX; i += this.discretizacao) {
+                for (double j = 0; j < maximoY; j += this.discretizacao) {
                     this.celulas.add(new Celula(i, j));
                 }
             }
@@ -67,20 +68,20 @@ public class Planta {
 
     }
 
-    /*public ArrayList<Celula> CalculaForcaBruta(double d) {
+    /*public ArrayList<Celula> CalculaForcaBruta(double discretizacao) {
 
         this.retas = new ArrayList<Reta>();
         this.celulas = new ArrayList<Celula>();
 
-        this.mx = 0; // maximo x
-        this.my = 0; // maximo y
+        this.maximoX = 0; // maximo x
+        this.maximoY = 0; // maximo y
 
         for (Parede p : paredes) {
-            if (p.getX() + p.getLargura() > mx) {
-                mx = p.getX() + p.getLargura();
+            if (p.getX() + p.getLargura() > maximoX) {
+                maximoX = p.getX() + p.getLargura();
             }
-            if (p.getY() + p.getAltura() > my) {
-                my = p.getY() + p.getAltura();
+            if (p.getY() + p.getAltura() > maximoY) {
+                maximoY = p.getY() + p.getAltura();
             }
             if (p.getLargura() > p.getAltura()) {
                 this.retas.add(new Reta(p.getX(), p.getY() + p.getAltura() / 2, p.getX() + p.getLargura(), p.getY() + p.getAltura() / 2, p.getPerda()));
@@ -91,8 +92,8 @@ public class Planta {
         }
 
         // popular celula
-        for (double i = 0; i < mx; i += d) {
-            for (double j = 0; j < my; j += d) {
+        for (double i = 0; i < maximoX; i += discretizacao) {
+            for (double j = 0; j < maximoY; j += discretizacao) {
                 this.celulas.add(new Celula(i, j));
             }
         }
@@ -100,10 +101,10 @@ public class Planta {
         int cmaior24 = 0, cmenor0 = 0;
         for (Celula c : celulas) {
             for (PontoAcesso pa : pas) {
-                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + d / 2), 2) + Math.pow(pa.getY() - (c.getY() + d / 2), 2)));
+                db = 20 - 45 - 10 * 1.4 * Math.log10(Math.sqrt(Math.pow(pa.getX() - (c.getX() + discretizacao / 2), 2) + Math.pow(pa.getY() - (c.getY() + discretizacao / 2), 2)));
 
                 for (Reta r : retas) {
-                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + d / 2, c.getY() + d / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
+                    db -= interseccao(pa.getX(), pa.getY(), c.getX() + discretizacao / 2, c.getY() + discretizacao / 2, r.getX1(), r.getY1(), r.getX2(), r.getY2()) * r.getP();
                 }
                 if (db > c.getPotencia()) {
                     c.setPotencia(db);

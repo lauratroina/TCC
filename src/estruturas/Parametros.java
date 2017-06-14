@@ -1,6 +1,7 @@
 package estruturas;
 
 import calculo.FuncaoObjetivo;
+import java.util.ArrayList;
 
 public class Parametros {
 
@@ -15,8 +16,13 @@ public class Parametros {
     private int taxaDesejada;
     private int taxaAceitavel;
     private double intervaloHillClimbing;
+    private int frequenciaOperacaoITU;
+    private ArrayList<Double> perdasCost;
+    private int potenciaTransmitida;
+    private int tipoAmbienteITU;
+    private int coberturaDesejada;
 
-    public void setParametros(int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, int metodoCalculo, int taxaDesejada, int taxaAceitavel, double intervaloHillClimbing) {
+    public void setParametros(int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, int metodoCalculo, int taxaDesejada, int taxaAceitavel, double intervaloHillClimbing, int potenciaTransmitida, int coberturaDesejada) {
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
         this.probabilidadeCrossover = probabilidadeCrossover;
@@ -27,6 +33,35 @@ public class Parametros {
         this.taxaDesejada = taxaDesejada;
         this.taxaAceitavel = taxaAceitavel;
         this.intervaloHillClimbing = intervaloHillClimbing;
+        this.coberturaDesejada = coberturaDesejada;
+        this.potenciaTransmitida = potenciaTransmitida;
+    }
+
+    public int getPotenciaTransmitida(){
+        return this.potenciaTransmitida;
+    }
+    
+    public int getCoberturaDesejada(){
+        return this.coberturaDesejada;
+    }
+    public void setFrequenciaOperacaoITU(int frequenciaOperacaoITU) {
+        this.frequenciaOperacaoITU = frequenciaOperacaoITU;
+    }
+
+    public int getFrequenciaOperacaoITU() {
+        return this.frequenciaOperacaoITU;
+    }
+
+    public void setTipoAmbienteITU(int tipoAmbienteITU) {
+        this.tipoAmbienteITU = this.tipoAmbienteITU;
+    }
+
+    public int getTipoAmbienteITU() {
+        return this.tipoAmbienteITU;
+    }
+
+    public void setPerdasCost(ArrayList<Double> perdasCost) {
+        this.perdasCost = perdasCost;
     }
 
     public int getNumeroIndividuos() {
@@ -47,10 +82,6 @@ public class Parametros {
 
     public int getNumeroIndividuosSelecionados() {
         return numeroIndividuosSelecionados;
-    }
-
-    public boolean isElitismo() {
-        return elitismo;
     }
 
     public int getMetodoCalculo() {
