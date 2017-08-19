@@ -1,10 +1,14 @@
 package janelas;
 
 import estruturas.Parametros;
+import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class JanelaAjustes extends javax.swing.JFrame {
@@ -103,8 +107,7 @@ public class JanelaAjustes extends javax.swing.JFrame {
             }
         });
 
-        jtMetodoCalculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ITU-r", "Cost 231" }));
-        jtMetodoCalculo.setSelectedIndex(1);
+        jtMetodoCalculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "ITU-r", "Cost 231" }));
         jtMetodoCalculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtMetodoCalculoActionPerformed(evt);
@@ -368,7 +371,7 @@ public class JanelaAjustes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTaxaDesejadaActionPerformed
 
     private void jtMetodoCalculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMetodoCalculoActionPerformed
-        if (this.jtMetodoCalculo.getSelectedIndex() == 0) {
+        if (this.jtMetodoCalculo.getSelectedIndex() == 1) {
             JSpinner spinner = new JSpinner(new SpinnerNumberModel(2400, 900, 3000, 100));
             JOptionPane.showMessageDialog(null, spinner, "Frequência de Operação do ITU", 1);
             parametros.setFrequenciaOperacaoITU((Integer) spinner.getValue());
@@ -378,6 +381,20 @@ public class JanelaAjustes extends javax.swing.JFrame {
             combo.addItem("Comercial");
             JOptionPane.showMessageDialog(null, combo, "Tipo de ambiente do ITU", 1);
              parametros.setTipoAmbienteITU(combo.getSelectedIndex());
+        }else if (this.jtMetodoCalculo.getSelectedIndex() == 2){
+            
+            JFrame janela = new JFrame("Meu primeiro frame em Java");
+          
+            for (String tipoPerda : parametros.getTiposPerdaCost()) {
+                JLabel l = new JLabel(tipoPerda);
+                janela.add(l);
+                JTextField textField = new JTextField(10);
+                l.setLabelFor(textField);
+                janela.add(textField);
+            }
+            
+            janela.setSize(300,200);
+            janela.setVisible(true);
         }
 
     }//GEN-LAST:event_jtMetodoCalculoActionPerformed

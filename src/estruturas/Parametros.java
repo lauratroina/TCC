@@ -1,6 +1,5 @@
 package estruturas;
 
-import calculo.FuncaoObjetivo;
 import java.util.ArrayList;
 
 public class Parametros {
@@ -21,7 +20,8 @@ public class Parametros {
     private int potenciaTransmitida;
     private int tipoAmbienteITU;
     private int coberturaDesejada;
-
+    private ArrayList<String> tiposPerdasCost;
+    
     public void setParametros(int numeroIndividuos, int numeroGeracoes, double probabilidadeCrossover, double probabilidadeMutacao, int numeroIndividuosSelecionados, boolean elitismo, int metodoCalculo, int taxaDesejada, int taxaAceitavel, double intervaloHillClimbing, int potenciaTransmitida, int coberturaDesejada) {
         this.numeroIndividuos = numeroIndividuos;
         this.numeroGeracoes = numeroGeracoes;
@@ -63,7 +63,14 @@ public class Parametros {
     public void setPerdasCost(ArrayList<Double> perdasCost) {
         this.perdasCost = perdasCost;
     }
-
+    public void setTipoPerdasCost(ArrayList<String> tiposPerdasCost) {
+        this.tiposPerdasCost = tiposPerdasCost;
+    }
+    
+    public ArrayList<String> getTiposPerdaCost(){
+        return this.tiposPerdasCost;
+    }
+    
     public int getNumeroIndividuos() {
         return numeroIndividuos;
     }

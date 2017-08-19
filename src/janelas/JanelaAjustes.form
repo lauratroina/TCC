@@ -320,12 +320,12 @@
         <Component class="javax.swing.JComboBox" name="jtMetodoCalculo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="ITU-r"/>
-                <StringItem index="1" value="Cost 231"/>
+              <StringArray count="3">
+                <StringItem index="0" value="Selecione"/>
+                <StringItem index="1" value="ITU-r"/>
+                <StringItem index="2" value="Cost 231"/>
               </StringArray>
             </Property>
-            <Property name="selectedIndex" type="int" value="1"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtMetodoCalculoActionPerformed"/>

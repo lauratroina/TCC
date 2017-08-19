@@ -239,11 +239,21 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             planta.Monta(arquivo, parametros.getDiscretizacao());
 
         }
+        
+        ArrayList<String> tiposPerdasCost = new ArrayList<String>();
+        for(Parede p : planta.paredes){
+            if(!tiposPerdasCost.contains(p.getTipoParede())){
+                tiposPerdasCost.add(p.getTipoParede());
+            }
+        }
+        
+        if (tiposPerdasCost.size() > 0)
+            parametros.setTipoPerdasCost(tiposPerdasCost);
 
         double fatorDeCorrecao = Math.min(jPanel1.getWidth() / planta.maximoX, jPanel1.getHeight() / planta.maximoY);
         Graphics g = jPanel1.getGraphics();
         DesenhaParedes(planta.paredes, parametros.getDiscretizacao(), fatorDeCorrecao, g);
-
+        
 
     }//GEN-LAST:event_jbAbrirActionPerformed
 

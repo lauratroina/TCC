@@ -30,9 +30,9 @@ public class Planta {
                     double y = Double.parseDouble(parede.getAttribute("y"));
                     double altura = Double.parseDouble(parede.getAttribute("altura"));
                     double largura = Double.parseDouble(parede.getAttribute("largura"));
-                    double perda = Double.parseDouble(parede.getAttribute("perda"));
+                    String tipoParede = parede.getAttribute("perda");
                     
-                    this.paredes.add(new Parede(x, y, largura, altura, perda));
+                    this.paredes.add(new Parede(x, y, largura, altura, tipoParede));
                 }
             }
 
@@ -67,6 +67,8 @@ public class Planta {
         }
 
     }
+    
+    
 
     /*public ArrayList<Celula> CalculaForcaBruta(double discretizacao) {
 

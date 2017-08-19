@@ -4,15 +4,26 @@ public class Parede {
 
     private double x, y, altura, largura, perda;
     private Reta reta;
+    private String tipoParede;
+    
 
-    public Parede(double x, double y, double largura, double altura, double perda) {
+    
+     public Parede(double x, double y, double largura, double altura, String tipoParede) {
         this.x = x;
         this.y = y;
         this.altura = altura;
         this.largura = largura;
-        this.perda = perda;
+        this.tipoParede = tipoParede;
     }
 
+    public String getTipoParede(){
+        return tipoParede;
+    }
+    
+    public void setTipoParede(String tipoParede){
+        this.tipoParede = tipoParede;
+    }
+    
     public double getX() {
         return x;
     }
