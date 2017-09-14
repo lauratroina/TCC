@@ -16,6 +16,9 @@ public class Parede {
         this.tipoParede = tipoParede;
     }
 
+    public void setPerda(double perda){
+        this.perda = perda;
+    }
     public String getTipoParede(){
         return tipoParede;
     }
@@ -60,9 +63,7 @@ public class Parede {
         return perda;
     }
 
-    public void setPerda(double perda) {
-        this.perda = perda;
-    }
+   
     
     public Reta getReta(){
         return reta;

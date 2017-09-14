@@ -1,6 +1,7 @@
 package estruturas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Parametros {
 
@@ -16,7 +17,7 @@ public class Parametros {
     private int taxaAceitavel;
     private double intervaloHillClimbing;
     private int frequenciaOperacaoITU;
-    private ArrayList<Double> perdasCost;
+    private HashMap<String, Double> perdasCost;
     private int potenciaTransmitida;
     private int tipoAmbienteITU;
     private int coberturaDesejada;
@@ -60,9 +61,14 @@ public class Parametros {
         return this.tipoAmbienteITU;
     }
 
-    public void setPerdasCost(ArrayList<Double> perdasCost) {
+    public void setPerdasCost(HashMap<String, Double> perdasCost) {
         this.perdasCost = perdasCost;
     }
+    
+    public HashMap<String, Double> getPerdasCost() {
+        return this.perdasCost;
+    }
+     
     public void setTipoPerdasCost(ArrayList<String> tiposPerdasCost) {
         this.tiposPerdasCost = tiposPerdasCost;
     }

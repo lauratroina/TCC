@@ -12,6 +12,7 @@
 \usepackage{verbatim}
 %\usepackage{hyperref} 
 %\usepackage{float} 
+\usepackage{verbatim}
 
 \bibliographystyle{abnt} 
 %\bibliographystyle{apalike} 
@@ -336,26 +337,6 @@ ate que o criterio de satisfacao seja satisfeito
 O algoritmo \ref{algGeneticoCan} começa inicializando todas as variavéis que formam as soluções candidatas. A avaliação da qualidade de uma solução candidata é feita com base no valor em suas variáveis. É com base na evolução da qualidade do indivíduos que se resolve o problema. O cálculo da qualidade também engloba as restrições às quais o problema está sujeito. O processo de escolha de pai e mãe efetua a seleção de soluções candidatas para gerar as soluções da próxima geração. Ajustada corretamente, é esta operação que conduz a população de soluções candidatas para regiões mais promissoras do espaço de busca. Roleta e torneio, são os tipos mais usados de seleção. O processo de cruzamento envolve gerar dois filhos a partir do pai e da mãe selecionados anteriormente. Neste processo, genes dos pais são misturados de modo que cada filho herde características de ambos. Cruzamento em um ponto, cruzamento em dois pontos e cruzamento uniforme são alguns tipos de cruzamento. O próximo passo é a mutação. Significa alterar probabilisticamente o valor de alguns dos genes que compõe o indivíduo. Por fim, os indivíduos da nova geração se tornam a geração atual e o processo se repete até que o critério de satisfação seja satisfeito. Alguns critérios de satisfação utilizados são número máximo de iterações e convergência da população. \cite{luke2009metaheuristics} \cite{mitchell1998introduction} %conferido
 
 
-%\subsection{Objetivo}
-
-%OBJETIVO 
-
-%\subsection{Tipos (SISD,SIMD,MISD,MIMD)}
-
-%TIPO
-
-%\subsection{Formas}
-
-%FORMAS
-
-%\subsubsection{Memória compartilhada}
-
-%MEMORIA COMPARTILHADA
-
-%\subsubsection{Troca de Mensagens}
-
-%TROCA DE MENSAGENS
-
 \chapter{Trabalhos relacionados} 
 
 A otimização do posicionamento de pontos de acesso para melhoria de cobertura de redes sem fio, utilizando algoritmo genético, é encontrada nos três seguintes estudos que servem de referência para este trabalho.
@@ -426,6 +407,7 @@ Aplica pesos
 Obtem qualidade da solucao
 \end{lstlisting}
 
+\begin{comment}
 \section{Protótipos de telas}
 
 Como mostra a figura \ref{fig:prototipoUm}, a tela de início possui um espaço para o usuário escolher o arquivo XML que especifica a planta baixa que será analisada. Os botões disponíveis são Submeter, Ajustar parâmetros e Calcular. 
@@ -461,9 +443,58 @@ A figura \ref{fig:prototipoTres} mostra um rascunho de como será a tela de exib
 
 A implementação do algoritmo será feita para rodar em um sistema \textit{desktop}. A linguagem utilizada será Java.
 
-\section{Parâmetros do sistema}
 
-Para fazer a análise do local escolhido pelo usuário, o sistema necessita receber como entrada um arquivo XML contendo a descrição da planta baixa que será analisada. Um exemplo desse arquivo é a figura \ref{fig:exemploXml}. Cada planta é composta por $n$ paredes, e cada parede deve conter as seguintes características: deslocamento x e deslocamento y em relação ao canto superior esquerdo da planta, altura, largura e o coeficiente de perda de sinal para aquela parede. 
+\end{comment}
+	
+\chapter{Resultados} 
+
+\section{O protótipo P.U.T.A. - Posicionador Universal de Terminais de Acesso}
+
+\subsection{Descrição de telas}
+
+O protótipo é composto por duas telas, com elas é permitido ao usuário fazer a entrada da planta que será analizada, configurar os parâmetros conforme sua preferência e ver o resultado da análise feita pelo programa.
+
+\textbf{Tela principal}: Conforme mostra a figura \ref{fig:telaPrincipal}, a tela principal contém por uma área para \textit{upload} do arquivo da planta que vai ser feita a distribuição dos aparelhos de acesso. Nesse momento é perguntado ao usuário qual a discretização que ele deseja utilizar. A área em branco mostra uma visualização da planta lida e também o \textit{heatmap} do resultado encontrado.
+ 
+No pé da tela está um botão de Configurações, ele abre a tela de configurações de parâmetros do problema. 
+O botão Exportar, exporta o resultado mostrado na tela para um arquivo PDF. 
+O botão Calcular, faz com que o protótipo inicie o cálculo da solução do problema.
+ 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.4]{img/tela_principal.png}
+	\caption{Tela Principal}
+	\label{fig:telaPrincipal}
+\end{figure}
+
+
+\textbf{Tela de Configurações}: A tela mostrada na figura \ref{fig:telaConfiguracoes} serve para o usuário ajustar os parâmetros referentes ao Algoritmo Genético e ao problema em si. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.4]{img/tela_configuracao.png}
+	\caption{Tela de Configuração}
+	\label{fig:telaConfiguracoes}
+\end{figure}
+
+Os parâmetros do algoritmo genético são:
+Elitismo, Número de Indivíduos, Número de Gerações, Probabilidade de \textit{Crossover}, Probabilidade de Mutação e Número de Indivíduos Selecionados.
+
+Também precisam ser ajustados os paramêtros relativos ao problema:
+
+\begin{description}
+\item[Menor taxa de transferência desejada]
+Representa a quantidade de sinal que se deseja obter na resolução do problema.
+\item[Menor taxa de transferência aceitável] Representa a quantidade de sinal mínima que se deseja obter
+\item[Método de cálculo da perda] Permite a escolha do método que vai ser usado para calcular a perda de sinal: de acordo com a escolha do usuário, será solicitado que o usuário entre com os dados relativos ao método escolhido. Para o ITU é necessário definir a frequência de saída do roteador, e o tipo de ambiente da planta. Para o Cost, é necessário informar a perda de cada tipo de parede.
+\item[Passo Hill-Climbing] Definição em metros, do comprimento do passo que o Hill-Climbing vai andar na sua execução.
+\item[Frequência transmitida] Frequência transmitida em decibéis (dB) do(s) ponto(s) de acesso.
+\item[Percentual de cobertura desejada] É o percentual de cobertura desejada com a taxa de transferência desejada ajustada anteriormente. 
+\end{description}
+
+\subsubsection{Entradas e Saídas}
+
+Para fazer a análise do local escolhido pelo usuário, o sistema necessita receber como entrada um arquivo XML contendo a descrição da planta baixa que será analisada. Um exemplo desse arquivo é a figura \ref{fig:exemploXml}. Cada planta é composta por $n$ paredes, e cada parede deve conter as seguintes características: deslocamento x e deslocamento y em relação ao canto superior esquerdo da planta, altura, largura e o coeficiente de perda de sinal para aquela parede, no caso de utilizar o método de cálculo de perda Cost231. 
 
 \begin{figure}[h]
 	\centering
@@ -481,26 +512,20 @@ A figura \ref{fig:exemploXsd} mostra o esquema de validação do arquivo XML sub
 	\label{fig:exemploXsd}
 \end{figure}
 
-A planta baixa representada pelo XML da figura \ref{fig:exemploXml} é apresentada na figura \ref{fig:desenhoPlantaBaixa}.
+A figura \ref{fig:exResultado} é um exemplo da saída do programa. É disponibilizado um \textit{heatmap} que possibilita a avaliação da distribuição de sinal gerado pela solução.
+Também é disponibilizado um arquivo de exportação gerado pelo programa, contendo o mesmo mapa, o número de pontos de acessos usados e suas respectivas posições.  
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.4]{img/plantaBaixaExemplo.png}
-	\caption{Desenho da planta baixa}
-	\label{fig:desenhoPlantaBaixa}
+	\includegraphics[scale=0.4]{img/exResultado.png}
+	\caption{Exemplo de Saída}
+	\label{fig:exResultado}
 \end{figure}
 
-	
-\chapter{Resultados} 
-
-\section{O protótipo Bátima}
-
-- Descrição de telas
-- Entradas e saídas
 
 \section{Discussão da qualidade dos resultados}
 
-\subsection{teste1}
+\subsection{Primeiro teste}
 
 gráficos
 
@@ -510,11 +535,11 @@ qualidade x execução -> óbvio para mostrar que que sempre alcança a qualidad
 
 nro aps x execução -> desvio padrão entre as soluções do mesmo problema -> menor dp melhor!
 
-\subsection{teste2}
+\subsection{Segundo Teste}
 
 gráficos
 
-\subsection{Difícil}
+\subsection{Terceiro Teste}
 
 -Plantas que gerem diferentes resultados a cada execução com quantidades diferentes de ap's para uma solução.
 
@@ -542,6 +567,8 @@ CONCLUSÃO
 
 \begin{description} 
 	\item[\textit{wireless}] tecnologia que não utiliza cabos.
+	\item[\textit{heatmap}] representação gráfica de dados onde os valores são representados por cores
+	\item[\textit{upload}] ato de enviar uma informação ou um arquivo, para um computador remoto
 \end{description} 
 
 %\appendix 

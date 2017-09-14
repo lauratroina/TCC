@@ -205,11 +205,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             i++;
         }
         
-        g.setColor(Color.black);
+        /*g.setColor(Color.black);
          g.fillRect(
                     0, (int) (planta.maximoY * f + 10 + 30 + 10),
                     jPanel1.getWidth(),
-                    30);
+                    30);*/
            
 
     }
@@ -259,13 +259,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jbCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalcularActionPerformed
 
-        problema = parametros.getMetodoCalculo() == 0 ? 
+        problema = parametros.getMetodoCalculo() == 1 ? 
                 new ITU(parametros.getTipoAmbienteITU(), parametros.getFrequenciaOperacaoITU()) : 
                 new Cost231();
         
         problema.potenciaTransmitida = parametros.getPotenciaTransmitida();
         problema.planta = planta;
-
+        
+        
+        
+        for(Parede p : problema.planta.paredes){
+           p.setPerda(parametros.getPerdasCost().get(p.getTipoParede()));
+        }
+        
         HashMap<Integer, Frequencia> mapa = new HashMap<Integer, Frequencia>();
         mapa.put(54, new Frequencia(-64, 0, 54, new Color(128, 0, 0)));
         mapa.put(48, new Frequencia(-66, -64, 48, new Color(255, 0, 0)));

@@ -22,10 +22,14 @@
 \contentsline {section}{\numberline {4.1}Diagrama de casos de uso}{21}
 \contentsline {section}{\numberline {4.2}Diagrama de classes}{22}
 \contentsline {section}{\numberline {4.3}Algoritmo de an\IeC {\'a}lise de qualidade}{22}
-\contentsline {section}{\numberline {4.4}Prot\IeC {\'o}tipos de telas}{23}
-\contentsline {section}{\numberline {4.5}Tecnologias utilizadas}{25}
-\contentsline {section}{\numberline {4.6}Par\IeC {\^a}metros do sistema}{25}
-\contentsline {chapter}{\numberline {5}Resultados}{27}
+\contentsline {chapter}{\numberline {5}Resultados}{24}
+\contentsline {section}{\numberline {5.1}O prot\IeC {\'o}tipo P.U.T.A. - Posicionador Universal de Terminais de Acesso}{24}
+\contentsline {subsection}{\numberline {5.1.1}Descri\IeC {\c c}\IeC {\~a}o de telas}{24}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Entradas e Sa\IeC {\'\i }das}{26}
+\contentsline {section}{\numberline {5.2}Discuss\IeC {\~a}o da qualidade dos resultados}{27}
+\contentsline {subsection}{\numberline {5.2.1}Primeiro teste}{27}
+\contentsline {subsection}{\numberline {5.2.2}Segundo Teste}{27}
+\contentsline {subsection}{\numberline {5.2.3}Terceiro Teste}{27}
 \contentsline {chapter}{\numberline {6}Conclus\IeC {\~a}o}{28}
 \contentsline {chapter}{Refer{\^e}ncias}{29}
 \contentsline {chapter}{Gloss\IeC {\'a}rio}{31}

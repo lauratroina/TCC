@@ -2,11 +2,18 @@ package janelas;
 
 import estruturas.Parametros;
 import java.awt.Button;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -380,21 +387,20 @@ public class JanelaAjustes extends javax.swing.JFrame {
             combo.addItem("Escritório");
             combo.addItem("Comercial");
             JOptionPane.showMessageDialog(null, combo, "Tipo de ambiente do ITU", 1);
-             parametros.setTipoAmbienteITU(combo.getSelectedIndex());
-        }else if (this.jtMetodoCalculo.getSelectedIndex() == 2){
+            parametros.setTipoAmbienteITU(combo.getSelectedIndex());
+        } else if (this.jtMetodoCalculo.getSelectedIndex() == 2) {
             
-            JFrame janela = new JFrame("Meu primeiro frame em Java");
-          
+            HashMap<String, Double> perdas = new HashMap<String, Double>();
+            
             for (String tipoPerda : parametros.getTiposPerdaCost()) {
-                JLabel l = new JLabel(tipoPerda);
-                janela.add(l);
-                JTextField textField = new JTextField(10);
-                l.setLabelFor(textField);
-                janela.add(textField);
+                JSpinner spinner = new JSpinner(new SpinnerNumberModel(5, 0, 500, 0.1));
+                JOptionPane.showMessageDialog(null, spinner, "Valor da perda: " + tipoPerda, 1);
+                perdas.put(tipoPerda, (Double) spinner.getValue());
             }
             
-            janela.setSize(300,200);
-            janela.setVisible(true);
+            parametros.setPerdasCost(perdas);
+            
+            
         }
 
     }//GEN-LAST:event_jtMetodoCalculoActionPerformed
