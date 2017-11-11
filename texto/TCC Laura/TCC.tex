@@ -525,31 +525,39 @@ Também é disponibilizado um arquivo de exportação gerado pelo programa, cont
 
 \section{Discussão da qualidade dos resultados}
 
-\subsection{Primeiro teste}
+todos os resultados foram obtidos utilizando um computador ....
 
-gráficos
+subsection casos de teste
+planta1 -> descrição (largura, altura, tipos de parede, perdas das paredes, ...)
 
-média qualidade x geração (de 1 execução)
+planta2
 
-qualidade x execução -> óbvio para mostrar que que sempre alcança a qualidade requisitada
+planta3
 
-nro aps x execução -> desvio padrão entre as soluções do mesmo problema -> menor dp melhor!
+subsection resultados
 
-\subsection{Segundo Teste}
+planta1
+tabela de qualidade -> descrição
+tabela de tempo -> descrição
+gráfico de qualidade -> descrição
+gráfico de tempo -> descrição
 
-gráficos
+planta2
 
-\subsection{Terceiro Teste}
+planta3
 
--Plantas que gerem diferentes resultados a cada execução com quantidades diferentes de ap's para uma solução.
+%%%%% tabela ap x tempo_com_hc/tempo_sem_hc
+%%%%% tabela ap x qualidade_com_hc/qualidade_sem_hc
+%%%%% tabela ap x dp_qualidade_com_hc/dp_qualidade_sem_hc
 
-- desabilita HC x habilita HC -> discutir impacto do HC no resultado (tanto em tempo quanto em nro de aps)
 
-subsection{???}
+Discussão dos resultados
 
-tempo x planta fácil (3 aps) /média (8 aps) /difícil (20 aps)-> escalabilidade
-
-extrapolando a linha de tendência do tempo, para um problema difícil com 100\% de cobertura a 54mbps levaria ??? muito tempo -> uma solução para isto seria limitar o máximo de aps possível, deixaria de levar infinito tempo para responder mas deixaria de garantir a cobertura
+1) justificar a iteratividade
+2) justificar o hill climbing apesar do aumento de tempo da tabela (ap x tempo_com_hc/tempo_sem_hc), houve um a) aumento de qualidade? ou b) diminuição do desvio padrão?
+3) analisar resultados da planta1 -> fácil
+4) analisar resultados de planta2 -> não detecta interno/externo
+5) analisar resultados da planta3 -> difícil, funciona, as vezes 100/100 com 6, as vezes com 7 e as vezes com 10
 
 \chapter{Conclusão} 
 
