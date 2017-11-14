@@ -227,7 +227,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jtEntradaXmlActionPerformed
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
-
+      
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(0.1, 0.0, 5.0, 0.1));
         JOptionPane.showMessageDialog(null, spinner, "Discretização da planta", 1);
         parametros.setDiscretizacao((Double) spinner.getValue());
@@ -310,12 +310,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCalcularActionPerformed
 
     private void jbVerResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerResultadoActionPerformed
-        String resultado = "";
+        String resultado = "\n";
         for (int j = 0; j < melhorResultado.length / 2; j++) {
-            resultado += "\nPonto de Acesso " + (j + 1) + ":   x: " + String.format("%.2f", melhorResultado[j])  + "   y:" + String.format("%.2f", melhorResultado[j+1]) +"     ";
+            resultado += "Ponto de Acesso " + (j + 1) + ":     x: " + String.format("%.2f", melhorResultado[j])  + "     y:" + String.format("%.2f", melhorResultado[j+1]) +"     \n";
+            
         }
-
-        JOptionPane.showMessageDialog(null, resultado);
+        resultado += "\n";
+        JOptionPane.showMessageDialog(null, resultado, "Resultado", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jbVerResultadoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
