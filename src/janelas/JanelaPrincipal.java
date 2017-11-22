@@ -257,6 +257,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         double fatorDeCorrecao = Math.min(jPanel1.getWidth() / planta.maximoX, jPanel1.getHeight() / planta.maximoY);
         Graphics g = jPanel1.getGraphics();
+        jPanel1.paint(g);
         DesenhaParedes(planta.paredes, parametros.getDiscretizacao(), fatorDeCorrecao, g);
 
 
